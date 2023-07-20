@@ -16,9 +16,15 @@ const db = mysql.createPool({
 });
 
 app.get('/posts', async (req, res) => {
-  const [rows] = await db.query('SELECT * FROM posts');
-  res.send({ data: rows, message: 'all entries from posts table' });
+  try {
+    const [rows] = await db.query('SELECT * FROM posts');
+    res.send({ data: rows, message: 'from posts table' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: 'Something went wrong.', error: err }); 
+  }
 });
+
 
 const port = 5000;
 

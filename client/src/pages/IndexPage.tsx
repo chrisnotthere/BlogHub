@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
-import { Post } from '../types/Post';
+import { Post } from "../types/Post";
 
 function IndexPage() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("http://localhost:5000/posts");
-      const data = await response.json();
-      console.log(data)
-      setPosts(data.data);
+
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data);
+      } else {
+        const message = await response.text();
+        setError(message);
+      }
     };
+
     fetchData();
   }, []);
 
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div>
