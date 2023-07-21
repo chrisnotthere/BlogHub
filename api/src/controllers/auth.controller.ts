@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { db } from '../config/db';
+import bcrypt from 'bcrypt';
 
 export const registerUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -15,9 +16,12 @@ export const registerUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Username already exists.' });
     }
 
-    // If user does not exist, insert the new user into the database
-    // TODO: hash the password before storing, this is just a placeholder
-    await db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, password]);
+    // Hash the password before storing
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Insert the new user into the database
+    await db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
 
     // success response
     res.json({ message: 'User registered successfully.' });
@@ -43,7 +47,9 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // Compare the password
     const user = users[0];
-    if (user.password !== password) {
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
       return res.status(400).json({ message: 'Invalid username or password.' });
     }
 
