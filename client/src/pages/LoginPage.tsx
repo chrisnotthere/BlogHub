@@ -1,6 +1,6 @@
 import { useState } from "react";
 import '../assets/styles/login-register.css'
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 function LoginPage() {
   const [username, setUsername] = useState<string>("");
@@ -12,8 +12,32 @@ function LoginPage() {
     e.preventDefault();
     console.log("login form submitted");
     console.log({ username, password });
-    
+    // send username and password to server
+    const loginUser = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        if (response.ok) {
+          console.log("user logged in successfully");
+          setRedirect(true);
+        } else {
+          const err = await response.json();
+          console.log(err)
+          setError(err.message);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        setError('Network error. Please try again later.');
+      }
+    }
+    loginUser();
   };
+
+  if (redirect)  return <Navigate to="/" />;
 
   return (
     <div className="form-container">
@@ -41,6 +65,7 @@ function LoginPage() {
           <Link to={'/register'} >Register</Link>
         </div>
       </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }

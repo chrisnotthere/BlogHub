@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../assets/styles/login-register.css'
+import { Navigate } from "react-router-dom";
 
 function RegisterPage() {
   const [username, setUsername] = useState<string>("");
@@ -11,25 +12,32 @@ function RegisterPage() {
     e.preventDefault();
     console.log("register form submitted");
     console.log({ username, password });
-    
     // send username and password to server
     const registerUser = async () => {
-      const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      try {
+        const response = await fetch("http://localhost:5000/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
 
-      if (response.ok) {
-        console.log("user registered successfully");
-        setRedirect(true);
-      } else {
-        const message = await response.text();
-        setError(message);
+        if (response.ok) {
+          console.log("user registered successfully");
+          setRedirect(true);
+        } else {
+          const err = await response.json();
+          console.log(err)
+          setError(err.message);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        setError('Network error. Please try again later.');
       }
     }
     registerUser();
   };
+
+  if (redirect)  return <Navigate to="/login" />;
 
   return (
     <div className="form-container">
@@ -53,6 +61,7 @@ function RegisterPage() {
         />
         <button type="submit">Register</button>
       </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
