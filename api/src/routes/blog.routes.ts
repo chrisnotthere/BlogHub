@@ -3,6 +3,6 @@ import { getAllPosts } from '../controllers/blog.controller';
 
 const router = Router();
 
-router.get('/', getAllPosts);
+router.get('/allPosts', getAllPosts);
 
 export default router;
