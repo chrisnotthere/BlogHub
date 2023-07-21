@@ -1,0 +1,20 @@
+import { db } from '../config/db';
+import { Post } from '../models/post.model';
+import { FieldPacket, RowDataPacket } from 'mysql2/promise';
+
+export const fetchAllPosts = async (): Promise<Post[]> => {  
+
+  const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('SELECT * FROM posts');
+  // The first element is an array of rows from the db (with each row being a RowDataPacket), 
+  // and the second element an array of FieldPacket that contains metadata about the fields.
+  // We only care about the first element (the rows), so we destructure it out into a variable 'rows'.
+
+  return rows.map((row) => {
+    // This function takes a row and returns an object that matches the shape of the Post interface.
+    return {
+      id: row.id,
+      title: row.title,
+      content: row.content,
+    } as Post;
+  });
+};

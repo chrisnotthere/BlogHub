@@ -1,30 +1,10 @@
 import express from 'express';
-import cors from 'cors';
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
+import { applyMiddleware } from './config/middleware';
+import routes from './routes';
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-
-const db = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  database: process.env.DB_NAME || 'bloghub',
-  password: process.env.DB_PASSWORD,
-});
-
-app.get('/posts', async (req, res) => {
-  try {
-    const [rows] = await db.query('SELECT * FROM posts');
-    res.send({ data: rows, message: 'from posts table' });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: 'Something went wrong.', error: err }); 
-  }
-});
-
+applyMiddleware(app);
+app.use(routes);
 
 const port = 5000;
 
