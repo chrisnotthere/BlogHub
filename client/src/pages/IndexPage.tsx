@@ -11,7 +11,8 @@ function IndexPage() {
 
       if (response.ok) {
         const data = await response.json();
-        setPosts(data);
+        setPosts(data.data);
+        console.log('post data: ', data)
       } else {
         const message = await response.text();
         setError(message);
