@@ -15,6 +15,18 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
       id: row.id,
       title: row.title,
       content: row.content,
+      author: row.author,
     } as Post;
   });
 };
+
+export const insertPost = async (post: Post): Promise<Post> => {
+  const { title, content, author } = post;
+  const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('INSERT INTO posts SET ?', { title, content, author });
+
+  return {
+    title,
+    content,
+    author,
+  } as Post;
+}
