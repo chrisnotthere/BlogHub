@@ -20,11 +20,35 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
   });
 };
 
+export const fetchPost = async (id: number): Promise<Post> => {
+  const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('SELECT * FROM posts WHERE id = ?', [id]);
+
+  return {
+    id: rows[0].id,
+    title: rows[0].title,
+    content: rows[0].content,
+    author: rows[0].author,
+  } as Post;
+}
+
 export const insertPost = async (post: Post): Promise<Post> => {
   const { title, content, author } = post;
   const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('INSERT INTO posts SET ?', { title, content, author });
 
   return {
+    title,
+    content,
+    author,
+  } as Post;
+}
+
+export const editPost = async (post: Post): Promise<Post> => {
+  // console.log('editPost')
+  const { id, title, content, author } = post;
+  const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('UPDATE posts SET title = ?, content = ?, author = ? WHERE id = ?', [title, content, author, id]);
+
+  return {
+    id,
     title,
     content,
     author,
