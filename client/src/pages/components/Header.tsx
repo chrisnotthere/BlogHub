@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "../../assets/styles/Header.module.css";
+import styles from "../../assets/styles/header.module.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
