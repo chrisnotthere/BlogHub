@@ -28,11 +28,31 @@
   align-items: center;
 }
 
+.icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.edit-icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: rgb(0, 123, 255);
+}
+
+.edit-icon:hover {
+  color: rgb(0, 0, 255);
+}
+
 .delete-icon {
   width: 25px;
   height: 25px;
   cursor: pointer;
   color: rgb(252, 143, 160);
+}
+
+.delete-icon:hover {
+  color: rgb(255, 0, 0);
 }
 
 .content {

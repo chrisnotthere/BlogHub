@@ -19,7 +19,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/create-post" element={userInfo.isLoggedIn ? <CreatePost /> : <Navigate to="/login" />} />
-        <Route path="/edit-post" element={userInfo.isLoggedIn ? <EditPost /> : <Navigate to="/login" />} />
+        <Route path="/edit-post/:id" element={userInfo.isLoggedIn ? <EditPost /> : <Navigate to="/login" />} />
       </Route>
     </Routes>
   );

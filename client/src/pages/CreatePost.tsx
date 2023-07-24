@@ -48,12 +48,6 @@ function CreatePost() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        {/* <input
-          type="content"
-          placeholder={"Content"}
-          value={summary}
-          onChange={(e) => setSummary(e.target.value)}
-        /> */}
         <div className="quill-container">
           <Editor value={content} onChange={setContent} />
         </div>
