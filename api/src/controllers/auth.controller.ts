@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { db } from '../config/db';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+interface MyJwtPayload extends JwtPayload {
+  userId: number;
+}
 
 export const registerUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -68,6 +72,64 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // success response
     res.json({ message: 'User logged in successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+};
+
+export const logoutUser = async (req: Request, res: Response) => {
+  // console.log('logoutUser')
+  try {
+  // Clear the cookie
+  res.clearCookie('token');
+  // res.cookie('token', '',).json('ok')
+
+  // success response
+  res.json({ message: 'User logged out successfully.' });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+}
+
+export const getUser = async (req: Request, res: Response) => {
+  // console.log('getUser')
+  try {
+    // Check for a token in the cookies
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ message: 'Not authenticated.' });
+    }
+
+    // If a token exists, verify it
+    const secret = process.env.JWT_SECRET;
+    let userId;
+    
+    try {
+      const decoded = jwt.verify(token, secret) as MyJwtPayload;
+      // console.log('decoded: ', decoded)
+      userId = decoded.userId;
+    } catch (error) {
+      return res.status(403).json({ message: 'Invalid token.' });
+    }
+
+    // Get user data from the database
+    const [users]: any = await db.query('SELECT * FROM users WHERE id = ?', [userId]);
+
+    // If no user found with this ID
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    const user = users[0];
+    // console.log('user: ', user)
+
+    // Respond with the user's data
+    res.json({ username: user.username });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });

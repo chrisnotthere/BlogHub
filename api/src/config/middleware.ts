@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import cookieParser from "cookie-parser";
 
 export const applyMiddleware = (app: express.Application) => {
   app.use(
@@ -9,4 +10,5 @@ export const applyMiddleware = (app: express.Application) => {
     })
   );
   app.use(express.json());
+  app.use(cookieParser());
 };

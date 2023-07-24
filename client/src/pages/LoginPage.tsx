@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../assets/styles/login-register.css'
 import { Link, Navigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 function LoginPage() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { setUserInfo } = useContext(UserContext);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ function LoginPage() {
 
         if (response.ok) {
           console.log("user logged in successfully");
+          setUserInfo({ username, isLoggedIn: true });
           setRedirect(true);
         } else {
           const err = await response.json();
