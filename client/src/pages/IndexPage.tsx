@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Post } from "../types/Post";
+import DOMPurify from 'dompurify';
 
 function IndexPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -26,13 +27,24 @@ function IndexPage() {
     return <div>{error}</div>;
   }
 
+  if (posts.length === 0) {
+    return (
+      <div>
+        <h2>No Posts to display</h2>
+        <p>Be the first to create a post!</p>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1>Posts</h1>
+      <br />
       {posts.map((post: Post) => (
         <div key={post.id}>
           <h2>{post.title}</h2>
-          <p>{post.content}</p>
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
+          <p>By {post.author}</p>
         </div>
       ))}
     </div>
