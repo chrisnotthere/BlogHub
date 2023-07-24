@@ -30,3 +30,11 @@ export const insertPost = async (post: Post): Promise<Post> => {
     author,
   } as Post;
 }
+
+export const removePost = async (id: number): Promise<Post> => {
+  const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('DELETE FROM posts WHERE id = ?', [id]);
+
+  return {
+    id,
+  } as Post;
+}

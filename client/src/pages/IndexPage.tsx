@@ -24,6 +24,30 @@ function IndexPage() {
     fetchData();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) {
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:5000/posts/deletePost/${id}`, {
+        method: "DELETE",
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log("delete data: ", data);
+        setPosts(posts.filter((post) => post.id !== id));
+      } else {
+        const message = await response.text();
+        setError(message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -45,6 +69,7 @@ function IndexPage() {
             <div className="post-head">
               <h2>{post.title}</h2>
               <svg
+                onClick={handleDelete.bind(null, post.id)}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
