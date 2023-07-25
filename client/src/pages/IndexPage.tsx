@@ -26,15 +26,20 @@ function IndexPage() {
   }, []);
 
   const handleDelete = async (id: number) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
     if (!confirmDelete) {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/posts/deletePost/${id}`, {
-        method: "DELETE",
-      });
-  
+      const response = await fetch(
+        `http://localhost:5000/posts/deletePost/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
       if (response.ok) {
         const data = await response.json();
         console.log("delete data: ", data);
@@ -47,7 +52,7 @@ function IndexPage() {
       console.log(err);
     }
   };
-  
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -66,6 +71,10 @@ function IndexPage() {
       <div className="post-container">
         {[...posts].reverse().map((post: Post) => (
           <div className="post" key={post.id}>
+            <img
+              className="post-cover"
+              src={"http://localhost:5000/" + post.image}
+            />
             <div className="post-head">
               <h2>{post.title}</h2>
               <div className="icons">

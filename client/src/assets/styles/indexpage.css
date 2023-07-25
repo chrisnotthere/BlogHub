@@ -28,6 +28,13 @@
   align-items: center;
 }
 
+.post-cover {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: .25rem;
+}
+
 .icons {
   display: flex;
   gap: 1rem;

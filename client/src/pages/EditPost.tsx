@@ -1,26 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import Editor from "./components/Editor";
-import '../assets/styles/create-post.css'
+import "../assets/styles/create-post.css";
 import { UserContext } from "../context/UserContext";
 
 function EditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState<FileList | null>(null);
   const [redirect, setRedirect] = useState(false);
 
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
-    console.log('fetching data')
     const fetchData = async () => {
       const response = await fetch(`http://localhost:5000/posts/post/${id}`);
       if (response.ok) {
-        // const data = await response.json();
         const responseJson = await response.json();
         const data = responseJson.data;
-        console.log(data)
         setTitle(data.title || "");
         setContent(data.content || "");
       }
@@ -29,23 +27,28 @@ function EditPost() {
     fetchData();
   }, [id]);
 
-  async function updatePost(e: { preventDefault: () => void; }) {
+  async function updatePost(e: { preventDefault: () => void }) {
     e.preventDefault();
-    let data = JSON.stringify({
-      title: title,
-      content: content,
-      author: userInfo.username,
-      id: id
-    });
+    const formData = new FormData();
+    formData.set("title", title);
+    formData.set("content", content);
+    formData.set("author", userInfo.username);
 
-    const response = await fetch(`http://localhost:5000/posts/updatePost/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: data,
-      credentials: "include",
-    });
+    if (image) {
+      formData.set("image", image[0]);
+    }
+
+    console.log(formData);
+    console.log(image)
+
+    const response = await fetch(
+      `http://localhost:5000/posts/updatePost/${id}`,
+      {
+        method: "PUT",
+        body: formData,
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       setRedirect(true);
     }
@@ -65,6 +68,13 @@ function EditPost() {
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <label htmlFor="image">Cover Image</label>
+        <input
+          type="file"
+          onChange={(ev) => setImage(ev.target.files)}
+          id="image"
         />
         <div className="quill-container">
           <Editor value={content} onChange={setContent} />
