@@ -35,7 +35,6 @@ export const fetchPost = async (id: number): Promise<Post> => {
 }
 
 export const insertPost = async (post: Post): Promise<Post> => {
-  console.log('insertPost')
   const { title, content, author, image } = post;
   const [result]: [ResultSetHeader, FieldPacket[]] = await db.query('INSERT INTO posts SET ?', { title, content, author, image });
 
@@ -49,13 +48,10 @@ export const insertPost = async (post: Post): Promise<Post> => {
 }
 
 export const editPost = async (post: Post): Promise<Post> => {
-  console.log('editPost')
   const { id, title, content, author, image } = post;
-  console.log('====post: ', post)
 
   try {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('UPDATE posts SET title = ?, content = ?, author = ?, image = ? WHERE id = ?', [title, content, author, image, id]);
-    console.log(rows);
   } catch (error) {
     console.log(error);
   }

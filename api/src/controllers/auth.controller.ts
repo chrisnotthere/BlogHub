@@ -79,7 +79,6 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 export const logoutUser = async (req: Request, res: Response) => {
-  // console.log('logoutUser')
   try {
   // Clear the cookie
   res.clearCookie('token');
@@ -95,7 +94,6 @@ export const logoutUser = async (req: Request, res: Response) => {
 }
 
 export const getUser = async (req: Request, res: Response) => {
-  // console.log('getUser')
   try {
     // Check for a token in the cookies
     const token = req.cookies.token;
@@ -110,7 +108,6 @@ export const getUser = async (req: Request, res: Response) => {
     
     try {
       const decoded = jwt.verify(token, secret) as MyJwtPayload;
-      // console.log('decoded: ', decoded)
       userId = decoded.userId;
     } catch (error) {
       return res.status(403).json({ message: 'Invalid token.' });
@@ -125,7 +122,6 @@ export const getUser = async (req: Request, res: Response) => {
     }
 
     const user = users[0];
-    // console.log('user: ', user)
 
     // Respond with the user's data
     res.json({ username: user.username });

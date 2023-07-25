@@ -12,8 +12,6 @@ export const getAllPosts = async (req: Request, res: Response) => {
 };
 
 export const getPost = async (req: Request, res: Response) => {
-  // console.log('getPost')
-  // console.log('req.params: ', req.params)
   try {
     const id = Number(req.params.id);
     const post = await fetchPost(id);
@@ -25,11 +23,9 @@ export const getPost = async (req: Request, res: Response) => {
 };
 
 export const createPost = async (req: Request, res: Response) => {
-  console.log('createPost')
   try {
     const files = req.files as {[fieldname: string]: Express.Multer.File[]};
     const newPostData = { ...req.body, image: files['image'][0].path };
-    console.log('newPostData: ', newPostData)
     const newPost = await insertPost(newPostData);
     res.send({ data: newPost, message: 'post created' });
   } catch (err) {
@@ -39,9 +35,6 @@ export const createPost = async (req: Request, res: Response) => {
 };
 
 export const updatePost = async (req: Request, res: Response) => {
-  console.log('updatePost')
-  console.log('req.body: ', req.body)
-  console.log('req.files: ', req.files)
   try {
     const { title, content, author } = req.body;
     const id = Number(req.params.id);  // convert id to a number
@@ -56,8 +49,6 @@ export const updatePost = async (req: Request, res: Response) => {
 };
 
 export const deletePost = async (req: Request, res: Response) => {
-  console.log('deletePost')
-  console.log('req.params: ', req.params)
   try {
     const id = Number(req.params.id);
     const deletedPost = await removePost(id);
