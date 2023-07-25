@@ -42,7 +42,7 @@ function IndexPage() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("delete data: ", data);
+        // console.log("delete data: ", data);
         setPosts(posts.filter((post) => post.id !== id));
       } else {
         const message = await response.text();
@@ -73,7 +73,7 @@ function IndexPage() {
           <div className="post" key={post.id}>
             <img
               className="post-cover"
-              src={"http://localhost:5000/" + post.image}
+              src={"http://localhost:5000/" + (post.image || 'images/default.webp')}
             />
             <div className="post-head">
               <h2>{post.title}</h2>
