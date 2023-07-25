@@ -12,8 +12,8 @@ export const getAllPosts = async (req: Request, res: Response) => {
 };
 
 export const getPost = async (req: Request, res: Response) => {
-  console.log('getPost')
-  console.log('req.params: ', req.params)
+  // console.log('getPost')
+  // console.log('req.params: ', req.params)
   try {
     const id = Number(req.params.id);
     const post = await fetchPost(id);
@@ -25,8 +25,12 @@ export const getPost = async (req: Request, res: Response) => {
 };
 
 export const createPost = async (req: Request, res: Response) => {
+  console.log('createPost')
   try {
-    const newPost = await insertPost(req.body);
+    const files = req.files as {[fieldname: string]: Express.Multer.File[]};
+    const newPostData = { ...req.body, image: files['image'][0].path };
+    console.log('newPostData: ', newPostData)
+    const newPost = await insertPost(newPostData);
     res.send({ data: newPost, message: 'post created' });
   } catch (err) {
     console.log(err);
@@ -37,8 +41,13 @@ export const createPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   console.log('updatePost')
   console.log('req.body: ', req.body)
+  console.log('req.files: ', req.files)
   try {
-    const updatedPost = await editPost(req.body);
+    const { title, content, author } = req.body;
+    const id = Number(req.params.id);  // convert id to a number
+    const image = (req.files as { [fieldname: string]: Express.Multer.File[]; })['image'] ? 
+                  (req.files as { [fieldname: string]: Express.Multer.File[]; })['image'][0].path : undefined;
+    const updatedPost = await editPost({ id, title, content, author, image });
     res.send({ data: updatedPost, message: 'post updated' });
   } catch (err) {
     console.log(err);
