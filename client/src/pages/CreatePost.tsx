@@ -22,8 +22,6 @@ function CreatePost() {
     if (image) {
       formData.set("image", image[0]);
     }
-    console.log(formData);
-    console.log(image);
 
     const response = await fetch("http://localhost:5000/posts/createPost", {
       method: "POST",

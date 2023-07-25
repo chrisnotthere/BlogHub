@@ -12,8 +12,6 @@ function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("login form submitted");
-    console.log({ username, password });
     // send username and password to server
     const loginUser = async () => {
       try {

@@ -10,8 +10,6 @@ function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("register form submitted");
-    console.log({ username, password });
     // send username and password to server
     const registerUser = async () => {
       try {
