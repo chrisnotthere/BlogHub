@@ -8,6 +8,7 @@ import { UserContext } from "../context/UserContext";
 import CreatePost from "./CreatePost";
 import { useContext } from "react";
 import EditPost from "./EditPost";
+import PostPage from "./PostPage";
 
 function App() {
   const { userInfo } = useContext(UserContext);
@@ -18,8 +19,19 @@ function App() {
         <Route index element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/create-post" element={userInfo.isLoggedIn ? <CreatePost /> : <Navigate to="/login" />} />
-        <Route path="/edit-post/:id" element={userInfo.isLoggedIn ? <EditPost /> : <Navigate to="/login" />} />
+        <Route path="/post/:id" element={<PostPage />} />
+        <Route
+          path="/create-post"
+          element={
+            userInfo.isLoggedIn ? <CreatePost /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/edit-post/:id"
+          element={
+            userInfo.isLoggedIn ? <EditPost /> : <Navigate to="/login" />
+          }
+        />
       </Route>
     </Routes>
   );
