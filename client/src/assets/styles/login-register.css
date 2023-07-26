@@ -53,8 +53,35 @@
   text-align: center;
 }
 
+.role-select {
+  width: 193px;
+  margin-bottom: .5rem;
+}
+
+.role-select select {
+  border-radius: .25rem;
+}
+
+.role-t {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+
+.role-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: .8rem;
+  line-height: 1.2;
+  color: #4a4a4a;
+  text-align: center;
+  height: 25px;
+}
+
 .error {
   margin-top: 1.5rem;
   color: red;
-  /* max-width: min-content; */
 }

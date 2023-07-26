@@ -19,12 +19,11 @@ export const findUserByUsername = async (username: string) => {
 
 // Create a new user
 export const createUser = async (user: User) => {
-  const { username, password } = user;
+  const { username, password, role } = user;
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  await db.query("INSERT INTO users (username, password) VALUES (?, ?)", [
-    username,
-    hashedPassword,
+  await db.query("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", [
+    username, hashedPassword, role
   ]);
 };
 

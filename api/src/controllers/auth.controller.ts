@@ -9,14 +9,14 @@ import {
 } from "../services/auth.service";
 import { User } from "../models/user.model";
 
-// Register a new user, storing their username and hashed password
+// Register a new user, storing their username, hashed password, and role
 export const registerUser = async (req: Request, res: Response) => {
   const { username, password, role } = req.body;
 
-  if (!username || !password) {
+  if (!username || !password || !role) {
     return res
       .status(400)
-      .json({ message: "Username and password are required." });
+      .json({ message: "Username, password, and role are required." });
   }
 
   try {
