@@ -7,10 +7,11 @@ import {
   verifyJwtToken,
   findUserById,
 } from "../services/auth.service";
+import { User } from "../models/user.model";
 
 // Register a new user, storing their username and hashed password
 export const registerUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
 
   if (!username || !password) {
     return res
@@ -24,7 +25,8 @@ export const registerUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Username already exists." });
     }
 
-    await createUser(username, password);
+    let newUser: User = { username, password, role };
+    await createUser(newUser);
 
     res.json({ message: "User registered successfully." });
   } catch (error) {
@@ -44,12 +46,11 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const users = await findUserByUsername(username);
-    if (users.length === 0) {
+    const [user] = await findUserByUsername(username);
+    if (!user) {
       return res.status(400).json({ message: "Invalid username or password." });
     }
 
-    const user = users[0];
     const match = await validatePassword(password, user.password);
 
     if (!match) {

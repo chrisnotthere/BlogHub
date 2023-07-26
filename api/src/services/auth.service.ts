@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { db } from "../config/db";
 import { JwtPayload } from "jsonwebtoken";
+import { User } from "../models/user.model";
 
 interface MyJwtPayload extends JwtPayload {
   userId: number;
@@ -13,11 +14,12 @@ export const findUserByUsername = async (username: string) => {
     "SELECT * FROM users WHERE username = ?",
     [username]
   );
-  return users;
+  return users as User[];
 };
 
 // Create a new user
-export const createUser = async (username: string, password: string) => {
+export const createUser = async (user: User) => {
+  const { username, password } = user;
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   await db.query("INSERT INTO users (username, password) VALUES (?, ?)", [
@@ -49,5 +51,5 @@ export const findUserById = async (userId: number) => {
   const [users]: any = await db.query("SELECT * FROM users WHERE id = ?", [
     userId,
   ]);
-  return users;
+  return users as User[];
 };
