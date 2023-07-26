@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { Post } from "../types/Post";
 import DOMPurify from "dompurify";
 import styles from "../assets/styles/postpage.module.css";
@@ -8,6 +8,7 @@ function PostPage() {
   let { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,32 @@ function PostPage() {
     fetchData();
   }, [id]);
 
+  const handleDelete = async (id: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:5000/posts/deletePost/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        setRedirect(true);
+      } else {
+        const message = await response.text();
+        setError(message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (error) {
     return <div className={styles.errorMessage}>{error}</div>;
   }
@@ -32,6 +59,8 @@ function PostPage() {
   if (!post) {
     return <div className={styles.loading}>Loading...</div>;
   }
+
+  if (redirect)  return <Navigate to="/" />;
 
   return (
     <div className={styles.postPage}>
@@ -63,8 +92,7 @@ function PostPage() {
             </svg>
           </Link>
           <svg
-            // TODO: Add delete functionality from this page
-            // onClick={handleDelete.bind(null, post.id)}
+            onClick={handleDelete.bind(null, post.id)}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
