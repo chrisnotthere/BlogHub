@@ -36,11 +36,11 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const updatePost = async (req: Request, res: Response) => {
   try {
-    const { title, content, author } = req.body;
+    const { title, content, author, user_id } = req.body;
     const id = Number(req.params.id);  // convert id to a number
     const image = (req.files as { [fieldname: string]: Express.Multer.File[]; })['image'] ? 
                   (req.files as { [fieldname: string]: Express.Multer.File[]; })['image'][0].path : undefined;
-    const updatedPost = await editPost({ id, title, content, author, image });
+    const updatedPost = await editPost({ id, title, content, author, user_id, image });
     res.send({ data: updatedPost, message: 'post updated' });
   } catch (err) {
     console.log(err);

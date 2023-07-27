@@ -20,9 +20,17 @@ export function UserContextProvider({ children }) {
         }
 
         const data = await response.json();
-        setUserInfo({ username: data.username, isLoggedIn: true });
+
+        console.log('Context data: ', data)
+
+        setUserInfo({ 
+          username: data.username,
+          user_id: data.user_id,
+          role: data.role, 
+          isLoggedIn: true 
+        });
       } catch (error) {
-        setUserInfo({ username: "", isLoggedIn: false });
+        setUserInfo({ username: "", role: "", isLoggedIn: false });
       }
     };
 

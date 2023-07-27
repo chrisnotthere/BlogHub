@@ -18,6 +18,7 @@ function CreatePost() {
     formData.set("title", title);
     formData.set("content", content);
     formData.set("author", userInfo.username);
+    formData.set("user_id", userInfo.user_id);
 
     if (image) {
       formData.set("image", image[0]);

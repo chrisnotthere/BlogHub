@@ -35,23 +35,25 @@ export const fetchPost = async (id: number): Promise<Post> => {
 }
 
 export const insertPost = async (post: Post): Promise<Post> => {
-  const { title, content, author, image } = post;
-  const [result]: [ResultSetHeader, FieldPacket[]] = await db.query('INSERT INTO posts SET ?', { title, content, author, image });
+  const { title, content, author, user_id, image } = post;
+  const [result]: [ResultSetHeader, FieldPacket[]] = await db.query('INSERT INTO posts SET ?', { title, content, author, user_id, image });
 
   return {
     id: result.insertId,
     title,
     content,
     author,
+    user_id,
     image
   } as Post;
 }
 
 export const editPost = async (post: Post): Promise<Post> => {
-  const { id, title, content, author, image } = post;
+  console.log('editPost')
+  const { id, title, content, image } = post;
 
   try {
-    const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('UPDATE posts SET title = ?, content = ?, author = ?, image = ? WHERE id = ?', [title, content, author, image, id]);
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query('UPDATE posts SET title = ?, content = ?, image = ? WHERE id = ?', [title, content, image, id]);
   } catch (error) {
     console.log(error);
   }
@@ -60,7 +62,6 @@ export const editPost = async (post: Post): Promise<Post> => {
     id,
     title,
     content,
-    author,
     image
   } as Post;
 }

@@ -87,6 +87,7 @@ export const logoutUser = async (req: Request, res: Response) => {
 
 // Retrieve a user's information using their JWT
 export const getUser = async (req: Request, res: Response) => {
+  console.log("getUser")
   try {
     const token = req.cookies.token;
 
@@ -111,8 +112,9 @@ export const getUser = async (req: Request, res: Response) => {
     }
 
     const user = users[0];
+    // console.log(user)
 
-    res.json({ username: user.username });
+    res.json({ username: user.username, role: user.role, user_id: user.id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error." });
