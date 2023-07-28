@@ -67,12 +67,19 @@ export const loginUser = async (req: Request, res: Response) => {
       maxAge: 3600000,
     });
 
-    res.json({ message: "User logged in successfully." });
+    const userResponse = {
+      username: user.username,
+      role: user.role,
+      user_id: user.id,
+    };
+
+    res.json({ message: "User logged in successfully.", user: userResponse });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error." });
   }
 };
+
 
 // Log out a user by clearing their JWT from the cookie
 export const logoutUser = async (req: Request, res: Response) => {
@@ -87,7 +94,7 @@ export const logoutUser = async (req: Request, res: Response) => {
 
 // Retrieve a user's information using their JWT
 export const getUser = async (req: Request, res: Response) => {
-  console.log("getUser")
+  // console.log("getUser")
   try {
     const token = req.cookies.token;
 

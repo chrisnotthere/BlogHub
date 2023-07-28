@@ -24,7 +24,8 @@ function LoginPage() {
 
         if (response.ok) {
           console.log("user logged in successfully");
-          setUserInfo({ username, isLoggedIn: true });
+          const { user } = await response.json();
+          setUserInfo({ ...user, isLoggedIn: true });
           setRedirect(true);
         } else {
           const err = await response.json();
