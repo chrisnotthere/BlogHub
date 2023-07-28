@@ -74,25 +74,26 @@ function PostPage() {
     navigate(`/edit-post/${id}`);
   };
 
-  ////////////////////////////
   // submit rating
   const submitRating = async () => {
-    console.log('submitting rating')
+    console.log("submitting rating");
 
-    //TODO: check if user has already rated this post
-    
+    // check if user is logged in
+    if (!userInfo.isLoggedIn) {
+      alert("You must be logged in to rate a post.");
+      return;
+    }
 
     if (!rating) {
       alert("Please select a rating before submitting.");
       return;
     }
+    console.log(id, userInfo.user_id, rating); //debugging
 
-    console.log(id, userInfo, rating) //debugging
-  
-    const response = await fetch('http://localhost:5000/rating', {
-      method: 'POST',
+    const response = await fetch("http://localhost:5000/rating", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         postId: id,
@@ -100,17 +101,16 @@ function PostPage() {
         rating: rating,
       }),
     });
-  
+
     if (response.ok) {
-      alert('Your rating was successfully submitted.');
+      alert("Your rating was successfully submitted.");
     } else {
-      alert('Something went wrong while submitting your rating.');
+      alert("Something went wrong while submitting your rating.");
     }
   };
-  
 
   useEffect(() => {
-    console.log(rating);
+    console.log("rating: ", rating);
   }, [rating]);
 
   if (error) {
@@ -203,7 +203,9 @@ function PostPage() {
               </svg>
             ))}
           </div>
-          <button onClick={submitRating} type="button">Submit Rating</button>
+          <button onClick={submitRating} type="button">
+            Submit Rating
+          </button>
         </div>
       </div>
 

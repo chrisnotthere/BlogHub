@@ -1,4 +1,4 @@
-import { Router } from "express";
+import express from "express";
 import {
   createPost,
   deletePost,
@@ -8,7 +8,7 @@ import {
 } from "../controllers/blog.controller";
 import { upload } from "../config/middleware";
 
-const router = Router();
+const router = express.Router();
 
 router.get("/allPosts", getAllPosts);
 router.get("/post/:id", getPost);
