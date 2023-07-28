@@ -8,11 +8,13 @@ import { UserContext } from "../context/UserContext";
 function PostPage() {
   let { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  const [rating, setRating] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
 
+  // fetch individual post data
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:5000/posts/post/${id}`);
@@ -29,6 +31,7 @@ function PostPage() {
     fetchData();
   }, [id]);
 
+  // delete post if authorized
   const handleDelete = async (id: number) => {
     if (userInfo.role !== "admin" && userInfo.user_id !== post?.user_id) {
       alert("You can only delete posts you've authored!");
@@ -61,6 +64,7 @@ function PostPage() {
     }
   };
 
+  // edit post if authorized
   const handleEdit = (id: number) => {
     if (userInfo.role !== "admin" && userInfo.user_id !== post?.user_id) {
       alert("You can only edit posts you've authored!");
@@ -69,6 +73,45 @@ function PostPage() {
 
     navigate(`/edit-post/${id}`);
   };
+
+  ////////////////////////////
+  // submit rating
+  const submitRating = async () => {
+    console.log('submitting rating')
+
+    //TODO: check if user has already rated this post
+    
+
+    if (!rating) {
+      alert("Please select a rating before submitting.");
+      return;
+    }
+
+    console.log(id, userInfo, rating) //debugging
+  
+    const response = await fetch('http://localhost:5000/rating', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        postId: id,
+        userId: userInfo.user_id,
+        rating: rating,
+      }),
+    });
+  
+    if (response.ok) {
+      alert('Your rating was successfully submitted.');
+    } else {
+      alert('Something went wrong while submitting your rating.');
+    }
+  };
+  
+
+  useEffect(() => {
+    console.log(rating);
+  }, [rating]);
 
   if (error) {
     return <div className={styles.errorMessage}>{error}</div>;
@@ -130,8 +173,42 @@ function PostPage() {
           __html: DOMPurify.sanitize(post.content),
         }}
       />
+
+      <div className={styles.postRatingContainer}>
+        <div className={styles.postAverageRating}>
+          <p>Average Rating: 4.2</p>
+        </div>
+        <div className={styles.postRating}>
+          <p>Rate this post:</p>
+          <div className={styles.postRatingStars}>
+            {[1, 2, 3, 4, 5].map((value) => (
+              <svg
+                key={value}
+                xmlns="http://www.w3.org/2000/svg"
+                fill={value <= (rating || 0) ? "gold" : "none"}
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="postRatingStar"
+                data-value={value}
+                onClick={(e) =>
+                  setRating(Number((e.target as HTMLElement).dataset.value))
+                }
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                />
+              </svg>
+            ))}
+          </div>
+          <button onClick={submitRating} type="button">Submit Rating</button>
+        </div>
+      </div>
+
       <div className={styles.postAuthor}>
-        <p>By {post.author}</p>
+        <p>Posted By: {post.author}</p>
       </div>
     </div>
   );
