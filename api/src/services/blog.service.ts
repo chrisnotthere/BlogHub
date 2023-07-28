@@ -17,6 +17,7 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
       title: row.title,
       content: row.content,
       author: row.author,
+      user_id: row.user_id,
       image: row.image,
     } as Post;
   });
@@ -30,6 +31,7 @@ export const fetchPost = async (id: number): Promise<Post> => {
     title: rows[0].title,
     content: rows[0].content,
     author: rows[0].author,
+    user_id: rows[0].user_id,
     image: rows[0].image,
   } as Post;
 }
