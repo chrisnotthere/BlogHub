@@ -10,6 +10,7 @@ function PostPage() {
   const [post, setPost] = useState<Post | null>(null);
   const [rating, setRating] = useState<number | null>(null);
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [avgRating, setAvgRating] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { userInfo } = useContext(UserContext);
@@ -105,7 +106,7 @@ function PostPage() {
 
     if (response.ok) {
       fetchPostRating();
-      // alert("Your rating was successfully submitted.");
+      fetchAvgPostRating();
     } else {
       alert("Something went wrong while submitting your rating.");
     }
@@ -125,10 +126,24 @@ function PostPage() {
     }
   };
 
+  // fetch user rating
+  const fetchAvgPostRating = async () => {
+    const response = await fetch(
+      `http://localhost:5000/rating/avgPostRating/${id}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setAvgRating(Number(data.data));
+    } else {
+      const message = await response.text();
+      setError(message);
+    }
+  };
+
   useEffect(() => {
     fetchPostRating();
+    fetchAvgPostRating();
   }, [id, userInfo]);
-
 
   // if (error) {
   //   return <div className={styles.errorMessage}>{error}</div>;
@@ -193,7 +208,10 @@ function PostPage() {
 
       <div className={styles.postRatingContainer}>
         <div className={styles.postAverageRating}>
-          <p>Average Rating: 4.2</p>
+          <p>
+            Average Rating:{" "}
+            {avgRating ? avgRating.toFixed(2) : "No ratings yet"}
+          </p>
         </div>
         <div className={styles.postRating}>
           <p>Rate this post:</p>

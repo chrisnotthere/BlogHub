@@ -4,6 +4,7 @@ import {
   getExistingRating,
   updateRating,
   getRatingByPostIdAndUserId as getRating,
+  getAverageRatingByPostId as getAvgRating, 
 } from "../services/rating.service";
 
 export const postRating = async (req: Request, res: Response) => {
@@ -50,6 +51,20 @@ export const getRatingByPostIdAndUserId = async (req: Request, res: Response) =>
 };
 
 
-// export const getAvgPostRating = async (req: Request, res: Response) => {
-//   console.log("getAvgPostRating");
-// }
+export const getAverageRatingByPostId = async (req: Request, res: Response) => {
+  const postId: number = Number(req.params.postId);
+
+  try {
+    const avgRating = await getAvgRating(postId);
+
+    if (avgRating !== null) {
+      res.send({ data: avgRating });
+    } else {
+      res.status(404).send({ message: 'No ratings found for this post' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'There was an error processing your request' });
+  }
+};
+
