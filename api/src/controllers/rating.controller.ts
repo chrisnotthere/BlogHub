@@ -3,12 +3,10 @@ import {
   insertRating,
   getExistingRating,
   updateRating,
+  getRatingByPostIdAndUserId as getRating,
 } from "../services/rating.service";
 
 export const postRating = async (req: Request, res: Response) => {
-  // console.log("postRating");
-  // console.log(req.body);
-
   const { postId, userId, rating } = req.body;
 
   try {
@@ -30,3 +28,28 @@ export const postRating = async (req: Request, res: Response) => {
       .send({ message: "There was an error processing your request" });
   }
 };
+
+export const getRatingByPostIdAndUserId = async (req: Request, res: Response) => {
+  const postId: number = parseInt(req.params.postId);
+  const userId: number = parseInt(req.params.userId);
+
+  // Check if postId and userId are valid numbers
+  if (isNaN(postId) || isNaN(userId)) {
+    res.status(400).send({ message: 'Invalid post ID or user ID' });
+    return;
+  }
+
+  // Proceed with the database query if both postId and userId are valid
+  try {
+    const rating = await getRating(postId, userId);
+    res.send({ data: rating });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'There was an error processing your request' });
+  }
+};
+
+
+// export const getAvgPostRating = async (req: Request, res: Response) => {
+//   console.log("getAvgPostRating");
+// }

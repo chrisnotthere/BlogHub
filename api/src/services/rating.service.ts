@@ -23,3 +23,18 @@ export const insertRating = async (userId: number, postId: number, rating: numbe
 export const updateRating = async (ratingId: number, rating: number): Promise<void> => {
   await db.query("UPDATE ratings SET rating = ? WHERE id = ?", [rating, ratingId]);
 };
+
+export const getRatingByPostIdAndUserId = async (postId: number, userId: number) => {
+  
+  console.log("getRatingByPostIdAndUserId");
+  console.log(postId, userId);
+  const query = "SELECT rating FROM ratings WHERE post_id = ? AND user_id = ?";
+  const [rows]: any[] = await db.query(query, [postId, userId]);
+
+  if (rows.length > 0) {
+    return rows[0].rating;
+  } else {
+    // If no rating was found, return null
+    return null;
+  }
+};

@@ -9,6 +9,7 @@ function PostPage() {
   let { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [rating, setRating] = useState<number | null>(null);
+  const [userRating, setUserRating] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { userInfo } = useContext(UserContext);
@@ -103,19 +104,35 @@ function PostPage() {
     });
 
     if (response.ok) {
-      alert("Your rating was successfully submitted.");
+      fetchPostRating();
+      // alert("Your rating was successfully submitted.");
     } else {
       alert("Something went wrong while submitting your rating.");
     }
   };
 
-  useEffect(() => {
-    console.log("rating: ", rating);
-  }, [rating]);
+  // fetch user rating
+  const fetchPostRating = async () => {
+    const response = await fetch(
+      `http://localhost:5000/rating/${id}/${userInfo.user_id}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setUserRating(data.data);
+    } else {
+      const message = await response.text();
+      setError(message);
+    }
+  };
 
-  if (error) {
-    return <div className={styles.errorMessage}>{error}</div>;
-  }
+  useEffect(() => {
+    fetchPostRating();
+  }, [id, userInfo]);
+
+
+  // if (error) {
+  //   return <div className={styles.errorMessage}>{error}</div>;
+  // }
 
   if (!post) {
     return <div className={styles.loading}>Loading...</div>;
@@ -207,6 +224,12 @@ function PostPage() {
             Submit Rating
           </button>
         </div>
+        <p>
+          Your rating:{" "}
+          {userRating
+            ? `${userRating} stars`
+            : "You have not rated this post yet"}
+        </p>
       </div>
 
       <div className={styles.postAuthor}>
