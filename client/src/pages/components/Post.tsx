@@ -1,7 +1,7 @@
 import { Post } from "../../types/Post";
 import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 
 interface PostComponentProps {
@@ -10,7 +10,9 @@ interface PostComponentProps {
 }
 
 export function PostComponent({ post, handleDelete }: PostComponentProps) {
+  const [avgRating, setAvgRating] = useState<number | null>(null);
   const { userInfo } = useContext(UserContext);
+  const contentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   // check if user is admin or author of post
@@ -34,6 +36,35 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
     // Perform deletion
     handleDelete(postId);
   };
+
+  // get average rating
+  const fetchAvgPostRating = async () => {
+    const response = await fetch(
+      `http://localhost:5000/rating/avgPostRating/${post.id}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setAvgRating(Number(data.data));
+    } else {
+      const err = await response.text();
+      console.log(err)
+    }
+  };
+
+  useEffect(() => {
+    fetchAvgPostRating();
+  }, []);
+
+  // fade content text if too long
+  useEffect(() => {
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const threshold = 3 * rootFontSize;
+  
+    if (contentRef.current && contentRef.current.offsetHeight > threshold) {
+      contentRef.current.classList.add("faded");
+    }
+  }, [post.content]);
+  
 
   return (
     <div className="post">
@@ -81,13 +112,29 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
           </svg>
         </div>
       </div>
-      <div
-        className="content"
-        dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(post.content),
-        }}
-      />
-      <p className="author">By {post.author}</p>
+
+      <div className="post-content">
+        <div
+          className="content"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post.content),
+          }}
+          ref={contentRef}
+        />
+      </div>
+
+      <div className="post-foot">
+        <p className="author">By {post.author}</p>
+        <div className="rating">
+          <p>
+            Average rating: {avgRating ? avgRating.toFixed(2) : "N/A"}
+          </p>
+          <p className="link">
+            <Link to={`/post/${post.id}#ratings`}>Leave a comment or a rating</Link>
+          </p>
+        </div>
+      </div>
+
     </div>
   );
 }

@@ -8,20 +8,20 @@ function IndexPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPosts = async () => {
       const response = await fetch("http://localhost:5000/posts/allPosts");
 
       if (response.ok) {
         const data = await response.json();
         setPosts(data.data);
-        console.log("post data: ", data);
+        console.log("all posts: ", data);
       } else {
         const message = await response.text();
         setError(message);
       }
     };
 
-    fetchData();
+    fetchPosts();
   }, []);
 
   const handleDelete = async (id: number) => {
