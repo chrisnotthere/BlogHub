@@ -5,11 +5,14 @@ import DOMPurify from "dompurify";
 import styles from "../assets/styles/postpage.module.css";
 import { UserContext } from "../context/UserContext";
 import RatingComponent from "./components/Rating";
-import CommentComponent from "./components/Comment";
+import CommentEditor from "./components/CommentEditor";
+import CommentsDisplay from "./components/CommentsDisplay";
+import { Comment } from "../types/Comment";
 
 function PostPage() {
   let { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
@@ -74,6 +77,29 @@ function PostPage() {
     navigate(`/edit-post/${id}`);
   };
 
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/comment/allComments/${id}`);
+  
+      if (response.ok) {
+        const data = await response.json();
+        setComments(data.data);
+        // console.log(data);
+      } else {
+        const err = await response.text();
+        console.log(err);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // fetch comments
+  useEffect(() => {
+
+    fetchComments();
+  }, [id]);
+
   if (!post) {
     return <div className={styles.loading}>Loading...</div>;
   }
@@ -134,10 +160,11 @@ function PostPage() {
         }}
       />
 
-      <div className={styles.postFoot}>
-        <CommentComponent userInfo={userInfo} id={id}  />
+      <div className={styles.commentOrRate}>
+        <CommentEditor userInfo={userInfo} id={id} fetchComments={fetchComments} />
         <RatingComponent userInfo={userInfo} id={id}  />
       </div>
+      <CommentsDisplay userInfo={userInfo} id={id} comments={comments} />
 
     </div>
   );

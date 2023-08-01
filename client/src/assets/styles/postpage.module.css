@@ -77,7 +77,7 @@
   word-wrap: break-word;
 }
 
-.postFoot {
+.commentOrRate {
   background-color: #ececec;
   display: flex;
   justify-content: space-between;

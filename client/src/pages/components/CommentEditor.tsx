@@ -1,16 +1,20 @@
 import ReactQuill from "react-quill";
 import styles from "../../assets/styles/comment.module.css";
 import { useState } from "react";
+import { Comment } from "../../types/Comment";
 
 interface CommentComponentProps {
   id: string | undefined;
   userInfo: any;
+  fetchComments: () => void;
 }
 
-export default function CommentComponent({
+export default function CommentEditor({
   id,
   userInfo,
+  fetchComments
 }: CommentComponentProps) {
+
   const [commentValue, setCommentValue] = useState<string>("");
   const maxLength = 200; // max length of comment
 
@@ -36,9 +40,6 @@ export default function CommentComponent({
 
   async function createComment(e: { preventDefault: () => void }) {
     e.preventDefault();
-    console.log(commentValue);
-    console.log(id);
-    console.log(userInfo.user_id);
     try {
       const response = await fetch(
         `http://localhost:5000/comment/create`,
@@ -50,6 +51,7 @@ export default function CommentComponent({
           body: JSON.stringify({
             post_id: id,
             user_id: userInfo.user_id,
+            author: userInfo.username,
             content: commentValue,
           }),
         }
@@ -57,9 +59,10 @@ export default function CommentComponent({
 
       if (response.ok) {
         setCommentValue("");
-        console.log("Comment created!")
-        const data = await response.json();
-        console.log(data);
+        // console.log("Comment created!")
+        // const data = await response.json();
+        // console.log(data);
+        fetchComments();
       } else {
         const err = await response.text();
         console.log(err);

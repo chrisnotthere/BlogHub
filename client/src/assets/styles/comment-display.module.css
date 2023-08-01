@@ -1,0 +1,86 @@
+.commentsContainer {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  background-color: #ececec;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 1rem;
+}
+
+.commentContainer {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  margin-bottom: 1rem;
+  background-color: #fff;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.commentHeader h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.commentHeader span {
+  font-size: .8em;
+  color: #666;
+}
+
+.commentContent {
+  margin-bottom: 1rem;
+  font-size: 1em;
+  color: #333;
+}
+
+.commentFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentFoot span {
+  color: #333;
+  font-size: .8em;
+}
+
+.like {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  /* cursor: pointer; */
+}
+
+.likeIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  /* fill: #333; */
+
+}
+
+.delete {
+
+}
+
+.deleteIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  /* fill: #333; */
+}
+
+.deleteIcon:hover {
+  fill: #ff0000;
+}
