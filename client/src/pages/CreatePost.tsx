@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Editor from "./components/Editor";
-import "../assets/styles/create-post.css";
+import styles from "../assets/styles/create-post.module.css";
 import { UserContext } from "../context/UserContext";
 
 function CreatePost() {
@@ -39,7 +39,7 @@ function CreatePost() {
   }
 
   return (
-    <div className="create-post">
+    <div className={styles.createPost}>
       <form onSubmit={createNewPost}>
         <label htmlFor="title">Title</label>
         <input
@@ -56,7 +56,7 @@ function CreatePost() {
           onChange={(ev) => setImage(ev.target.files)}
           id="image"
         />
-        <div className="quill-container">
+        <div className={styles.quillContainer}>
           <Editor value={content} onChange={setContent} />
         </div>
         <button>Create post</button>
