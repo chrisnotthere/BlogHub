@@ -48,6 +48,28 @@
   margin-top: -2rem;
 }
 
+.editIcon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: rgb(0, 123, 255);
+}
+
+.editIcon:hover {
+  color: rgb(0, 0, 255);
+}
+
+.deleteIcon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  color: rgb(252, 143, 160);
+}
+
+.deleteIcon:hover {
+  color: rgb(255, 0, 0);
+}
+
 .postContent {
   margin-top: 1rem;
   font-size: 1.2rem;
@@ -66,9 +88,7 @@
 }
 
 .createCommentContainer {
-  /* background-color: bisque; */
   width: 100%;
-  /* flex: 4; */
 }
 
 .postRatingContainer {
@@ -106,7 +126,6 @@
   display: flex;
   margin-top: .25rem;
   padding-bottom: .5rem;
-  /* border-bottom: 1px solid #ccc; */
 }
 
 .postRatingStars svg {
@@ -114,4 +133,3 @@
   height: 28px;
   cursor: pointer;
 }
-

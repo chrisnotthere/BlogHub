@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Post } from "../types/Post";
-import "../assets/styles/indexpage.css";
+import styles from '../assets/styles/indexpage.module.css';
 import { PostComponent } from "./components/Post";
 
 function IndexPage() {
@@ -67,7 +67,7 @@ function IndexPage() {
 
   return (
     <div>
-      <div className="post-container">
+      <div className={styles.postContainer}>
         {[...posts].reverse().map((post: Post) => (
           <PostComponent key={post.id} post={post} handleDelete={handleDelete} />
         ))}

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import styles from '../../assets/styles/indexpage.module.css'
 
 interface PostComponentProps {
   post: Post;
@@ -61,25 +62,25 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
     const threshold = 3 * rootFontSize;
   
     if (contentRef.current && contentRef.current.offsetHeight > threshold) {
-      contentRef.current.classList.add("faded");
+      contentRef.current.classList.add(styles.faded);
     }
   }, [post.content]);
   
 
   return (
-    <div className="post">
+    <div className={styles.post}>
       <Link to={`/post/${post.id}`}>
         <img
           alt={post.title}
-          className="post-cover"
+          className={styles.postCover}
           src={"http://localhost:5000/" + (post.image || "images/default.webp")}
         />
       </Link>
-      <div className="post-head">
+      <div className={styles.postHead}>
         <Link to={`/post/${post.id}`}>
           <h2>{post.title}</h2>
         </Link>
-        <div className="icons">
+        <div className={styles.icons}>
           <svg
             onClick={() => handleEdit(post.id)}
             xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +88,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="edit-icon w-6 h-6"
+            className={styles.editIcon}
           >
             <path
               strokeLinecap="round"
@@ -102,7 +103,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="delete-icon w-6 h-6"
+            className={styles.deleteIcon}
           >
             <path
               strokeLinecap="round"
@@ -112,29 +113,29 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
           </svg>
         </div>
       </div>
-
-      <div className="post-content">
+  
+      <div className={styles.postContent}>
         <div
-          className="content"
+          className={styles.content}
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(post.content),
           }}
           ref={contentRef}
         />
       </div>
-
-      <div className="post-foot">
-        <p className="author">By {post.author}</p>
-        <div className="rating">
+  
+      <div className={styles.postFoot}>
+        <p className={styles.author}>By {post.author}</p>
+        <div className={styles.rating}>
           <p>
             Average rating: {avgRating ? avgRating.toFixed(2) : "N/A"}
           </p>
-          <p className="link">
+          <p className={styles.link}>
             <Link to={`/post/${post.id}#ratings`}>Leave a comment or a rating</Link>
           </p>
         </div>
       </div>
-
     </div>
   );
+  
 }

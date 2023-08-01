@@ -180,7 +180,7 @@ function PostPage() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="edit-icon w-6 h-6"
+          className={styles.editIcon}
         >
           <path
             strokeLinecap="round"
@@ -195,7 +195,7 @@ function PostPage() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="delete-icon w-6 h-6"
+          className={styles.deleteIcon}
         >
           <path
             strokeLinecap="round"
