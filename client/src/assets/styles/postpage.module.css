@@ -81,10 +81,11 @@
   background-color: #ececec;
   display: flex;
   justify-content: space-between;
-  padding: .5rem;
+  gap: 1rem;
+  padding: 1rem;
   margin-top: 1rem;
   border-radius: .5rem;
-  
+  height: 220px;
 }
 
 .createCommentContainer {
@@ -95,6 +96,7 @@
   background-color: #f9f9f9;
   font-size: .85rem;
   width: 12rem;
+  height: 9rem;
   padding: .5rem .25rem;
   border-radius: .5rem;
   display: flex;
