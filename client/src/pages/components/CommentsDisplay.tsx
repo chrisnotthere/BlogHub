@@ -2,16 +2,29 @@ import styles from "../../assets/styles/comment-display.module.css";
 import { Comment } from "../../types/Comment";
 
 interface CommentDisplayProps {
-  id: string | undefined;
-  userInfo: any;
   comments: Comment[];
+  deleteComment: (id: number) => void;
 }
 
 export default function CommentsDisplay({
-  id,
-  userInfo,
   comments,
+  deleteComment,
 }: CommentDisplayProps) {
+
+  function formatDate(dateString?: string): string {
+    if (!dateString) {
+      throw new Error("Date string is undefined");
+    }
+    const options: Intl.DateTimeFormatOptions = { 
+      year: "numeric", 
+      month: "short", 
+      day: "numeric", 
+      hour: "2-digit", 
+      minute: "2-digit" 
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+  
   return (
     <div className={styles.commentsContainer}>
       <h1 className={styles.title}>Comments</h1>
@@ -24,7 +37,7 @@ export default function CommentsDisplay({
             <div key={comment.id} className={styles.commentContainer}>
               <div className={styles.commentHeader}>
                 <h3>Author: {comment.author}</h3>
-                <span>Created at: {comment.created_at}</span>
+                <span>{formatDate(comment.created_at)}</span>
               </div>
               <div className={styles.commentContent}>{comment.content}</div>
               <div className={styles.commentFoot}>
@@ -53,7 +66,8 @@ export default function CommentsDisplay({
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className={styles.deleteIcon}
-                  >
+                    onClick={() => comment.id && deleteComment(comment.id)}
+                    >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

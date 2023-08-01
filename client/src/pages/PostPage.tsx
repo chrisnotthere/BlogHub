@@ -96,9 +96,32 @@ function PostPage() {
 
   // fetch comments
   useEffect(() => {
-
     fetchComments();
   }, [id]);
+
+  // delete comment
+  const deleteComment = async (id: number) => {
+    // console.log(id);
+    console.log('delete comment')
+    console.log('Deleting comment with id:', id);  // Add this line
+
+    try {
+      const response = await fetch(`http://localhost:5000/comment/delete/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log('comment deleted')
+        fetchComments();
+      } else {
+        const err = await response.text();
+        console.log(err);
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  };  
 
   if (!post) {
     return <div className={styles.loading}>Loading...</div>;
@@ -164,7 +187,7 @@ function PostPage() {
         <CommentEditor userInfo={userInfo} id={id} fetchComments={fetchComments} />
         <RatingComponent userInfo={userInfo} id={id}  />
       </div>
-      <CommentsDisplay userInfo={userInfo} id={id} comments={comments} />
+      <CommentsDisplay comments={comments} deleteComment={deleteComment} />
 
     </div>
   );

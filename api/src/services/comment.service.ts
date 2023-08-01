@@ -33,4 +33,22 @@ export const fetchAllComments = async (postId: number): Promise<Comment[]> => {
   } else {
     throw new Error("Error in fetching comments");
   }
-}
+};
+
+export const removeComment = async (id: number): Promise<void> => {
+  console.log('Removing comment with id:', id);  // Log id here
+  
+  if (isNaN(id)) {
+    throw new Error("Comment id is not a number");
+  }
+  
+  const [result]: any = await db.query(
+    "DELETE FROM comments WHERE id = ?",
+    [id]
+  );
+
+  if (!result.affectedRows) {
+    throw new Error("Error in deleting comment, or comment not found");
+  }
+};
+
