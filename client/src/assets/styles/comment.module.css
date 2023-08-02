@@ -10,7 +10,12 @@
   border: none;
   cursor: pointer;
   background-color: #fff;
+  border: 1px solid #d0e9e5;
   font-weight: 600;
+}
+
+.commentForm button:hover {
+  background-color: #d0e9e5;
 }
 
 .editorContainer {

@@ -5,17 +5,17 @@ import { UserContext } from "../../context/UserContext";
 
 export default function Header() {
   const { userInfo, setUserInfo } = useContext(UserContext);
-  
+
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:5000/auth/logout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include', 
+        credentials: "include",
       });
       setUserInfo({ username: "", isLoggedIn: false });
     } catch (error) {
-      console.error('Network error:', error);
+      console.error("Network error:", error);
     }
   };
 
@@ -25,23 +25,44 @@ export default function Header() {
         <Link to="/">BlogHub</Link>
       </div>
       <nav className={styles.nav}>
-        <ul>
-          { userInfo?.isLoggedIn ? (
+        <ul className={styles.navTop}>
+          <li>
+            <Link
+              to="/create-post"
+              className={userInfo.isLoggedIn ? "" : styles.inactiveLink}
+            >
+              Create Post
+            </Link>
+          </li>
+          <li>
+            <button
+              onClick={handleLogout}
+              className={`${styles.linkButton} ${
+                userInfo.isLoggedIn ? "" : styles.inactiveLink
+              }`}
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
+        <ul className={styles.navBottom}>
+          {userInfo.isLoggedIn ? (
             <>
-              <li>
-                <Link to="/create-post">Create Post</Link>
-              </li>
-              <li>
-                <a href="#" onClick={handleLogout}>Logout</a>
+              <li className={styles.username}>
+                {userInfo.username} - {userInfo.role}
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link to="/login">Login</Link>
+                <Link to="/login" className={styles.prominentLink}>
+                  Login
+                </Link>
               </li>
               <li>
-                <Link to="/register">Register</Link>
+                <Link to="/register" className={styles.prominentLink}>
+                  Register
+                </Link>
               </li>
             </>
           )}

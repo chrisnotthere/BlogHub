@@ -94,6 +94,7 @@
 
 .postRatingContainer {
   background-color: #f9f9f9;
+  border: 1px solid #d0e9e5;
   font-size: .85rem;
   width: 12rem;
   height: 9rem;
@@ -122,6 +123,11 @@
   border-radius: .25rem;
   border: none;
   cursor: pointer;
+  border: 1px solid #d0e9e5;
+}
+
+.postRating button:hover {
+  background-color: #d0e9e5;
 }
 
 .postRatingStars {

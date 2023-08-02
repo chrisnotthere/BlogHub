@@ -36,8 +36,6 @@ export const fetchAllComments = async (postId: number): Promise<Comment[]> => {
 };
 
 export const removeComment = async (id: number): Promise<void> => {
-  console.log('Removing comment with id:', id);  // Log id here
-  
   if (isNaN(id)) {
     throw new Error("Comment id is not a number");
   }
@@ -51,4 +49,3 @@ export const removeComment = async (id: number): Promise<void> => {
     throw new Error("Error in deleting comment, or comment not found");
   }
 };
-
