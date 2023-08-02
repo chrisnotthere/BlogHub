@@ -40,6 +40,10 @@ export const removeComment = async (id: number): Promise<void> => {
     throw new Error("Comment id is not a number");
   }
 
+  // delete all likes associated with this comment
+  await db.query("DELETE FROM comment_likes WHERE comment_id = ?", [id]);
+
+  // then, delete the comment itself
   const [result]: any = await db.query("DELETE FROM comments WHERE id = ?", [
     id,
   ]);
