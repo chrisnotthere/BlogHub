@@ -33,6 +33,10 @@ export default function CommentsDisplay({
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
+  function formatContent(input: string): string {
+    return input.replace(/\n/g, '<br />');
+  }
+
   const handleLikeClick = (commentId: number, userId: number) => {
     toggleLike(commentId, userId);
     fetchComments();
@@ -93,7 +97,12 @@ export default function CommentsDisplay({
                 <h3>Author: {comment.author}</h3>
                 <span>{formatDate(comment.created_at)}</span>
               </div>
-              <div className={styles.commentContent}>{comment.content}</div>
+              <div
+                className={styles.commentContent}
+                dangerouslySetInnerHTML={{
+                  __html: formatContent(comment.content),
+                }}
+              />
               <div className={styles.commentFoot}>
                 <div
                   className={styles.like}
