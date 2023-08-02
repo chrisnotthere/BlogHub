@@ -40,6 +40,12 @@ export default function CommentEditor({
 
   async function createComment(e: { preventDefault: () => void }) {
     e.preventDefault();
+    
+    if (userInfo.isLoggedIn === false) {
+      alert("You must be logged in to comment!");
+      return;
+    }
+
     try {
       const response = await fetch(
         `http://localhost:5000/comment/create`,

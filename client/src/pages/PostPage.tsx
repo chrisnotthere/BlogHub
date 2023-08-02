@@ -100,10 +100,14 @@ function PostPage() {
   }, [id]);
 
   // delete comment
-  const deleteComment = async (id: number) => {
-    // console.log(id);
-    console.log('delete comment')
-    console.log('Deleting comment with id:', id);  // Add this line
+  const deleteComment = async (id: number, user_id: number) => {
+    // console.log('delete comment')
+    // console.log('Deleting comment with id:', id);
+
+    if (userInfo.role !== "admin" && userInfo.user_id !== user_id) {
+      alert("You can only delete comments you've authored!");
+      return;
+    }
 
     try {
       const response = await fetch(`http://localhost:5000/comment/delete/${id}`, {

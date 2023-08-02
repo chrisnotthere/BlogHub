@@ -3,7 +3,7 @@ import { Comment } from "../../types/Comment";
 
 interface CommentDisplayProps {
   comments: Comment[];
-  deleteComment: (id: number) => void;
+  deleteComment: (id: number, user_id: number) => void;
 }
 
 export default function CommentsDisplay({
@@ -66,7 +66,7 @@ export default function CommentsDisplay({
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className={styles.deleteIcon}
-                    onClick={() => comment.id && deleteComment(comment.id)}
+                    onClick={() => comment.id && deleteComment(comment.id, comment.user_id)}
                     >
                     <path
                       strokeLinecap="round"
