@@ -21,7 +21,7 @@ export function UserContextProvider({ children }) {
 
         const data = await response.json();
 
-        console.log('UserContext data: ', data)
+        // console.log('UserContext data: ', data)
 
         setUserInfo({ 
           username: data.username,

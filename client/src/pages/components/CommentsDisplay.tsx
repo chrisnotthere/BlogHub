@@ -1,30 +1,84 @@
+import { useEffect, useState } from "react";
 import styles from "../../assets/styles/comment-display.module.css";
 import { Comment } from "../../types/Comment";
 
 interface CommentDisplayProps {
   comments: Comment[];
   deleteComment: (id: number, user_id: number) => void;
+  toggleLike: (commentId: number, userId: number) => void;
+  fetchComments: () => void;
+  userId: number;
 }
 
 export default function CommentsDisplay({
   comments,
   deleteComment,
+  toggleLike,
+  fetchComments,
+  userId,
 }: CommentDisplayProps) {
+  const [userLiked, setUserLiked] = useState<Record<number, boolean>>({});
 
   function formatDate(dateString?: string): string {
     if (!dateString) {
       throw new Error("Date string is undefined");
     }
-    const options: Intl.DateTimeFormatOptions = { 
-      year: "numeric", 
-      month: "short", 
-      day: "numeric", 
-      hour: "2-digit", 
-      minute: "2-digit" 
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
-  
+
+  const handleLikeClick = (commentId: number, userId: number) => {
+    toggleLike(commentId, userId);
+    fetchComments();
+  };
+
+  const checkUserLiked = async (userId: number, commentId: number) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/comment/checkIfUserLiked",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId, commentId }),
+        }
+      );
+      const data = await response.json();
+      return data.data;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  // Checks if the current user has liked each comment in the list.
+  // It then sets the 'userLiked' state with an object containing the liked status for each comment ID.
+  // This is because the comments are rendered in reverse order, so the index of the comment in the array
+  // does not correspond to the comment ID.
+  useEffect(() => {
+    // console.log("checking if user has liked comment");
+
+    Promise.all(
+      comments.map((comment) => checkUserLiked(userId, comment.id ?? 0))
+    ).then((likes) => {
+      const likesObject = likes.reduce((acc, liked, index) => {
+        // Get the corresponding comment ID for this index
+        const commentId = comments[index].id ?? 0;
+        // Set this comment ID's liked status in the accumulator object
+        acc[commentId] = liked;
+        return acc;
+      }, {} as Record<number, boolean>);
+      setUserLiked(likesObject);
+    });
+  }, [comments, userId]);
+
   return (
     <div className={styles.commentsContainer}>
       <h1 className={styles.title}>Comments</h1>
@@ -41,10 +95,15 @@ export default function CommentsDisplay({
               </div>
               <div className={styles.commentContent}>{comment.content}</div>
               <div className={styles.commentFoot}>
-                <div className={styles.like}>
+                <div
+                  className={styles.like}
+                  onClick={() =>
+                    comment.id && handleLikeClick(comment.id, userId)
+                  }
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
+                    fill={userLiked[comment.id ?? 0] ? "red" : "none"}
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
@@ -66,8 +125,10 @@ export default function CommentsDisplay({
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className={styles.deleteIcon}
-                    onClick={() => comment.id && deleteComment(comment.id, comment.user_id)}
-                    >
+                    onClick={() =>
+                      comment.id && deleteComment(comment.id, comment.user_id)
+                    }
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

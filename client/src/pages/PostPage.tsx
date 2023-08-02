@@ -27,7 +27,7 @@ function PostPage() {
         setPost(data.data);
       } else {
         const err = await response.text();
-        console.log(err)
+        console.log(err);
       }
     };
 
@@ -60,7 +60,7 @@ function PostPage() {
         setRedirect(true);
       } else {
         const err = await response.text();
-        console.log(err)
+        console.log(err);
       }
     } catch (err) {
       console.log(err);
@@ -79,8 +79,10 @@ function PostPage() {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/comment/allComments/${id}`);
-  
+      const response = await fetch(
+        `http://localhost:5000/comment/allComments/${id}`
+      );
+
       if (response.ok) {
         const data = await response.json();
         setComments(data.data);
@@ -101,31 +103,55 @@ function PostPage() {
 
   // delete comment
   const deleteComment = async (id: number, user_id: number) => {
-    // console.log('delete comment')
-    // console.log('Deleting comment with id:', id);
-
     if (userInfo.role !== "admin" && userInfo.user_id !== user_id) {
       alert("You can only delete comments you've authored!");
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/comment/delete/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:5000/comment/delete/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
-        console.log('comment deleted')
+        console.log("comment deleted");
         fetchComments();
       } else {
         const err = await response.text();
         console.log(err);
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  };  
+  };
+
+  const toggleLike = async (commentId: number, userId: number) => {
+    if (!userInfo.isLoggedIn) {
+      alert("You must be logged in to like a comment!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/comment/likeToggle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ commentId, userId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to toggle like");
+      }
+
+      fetchComments();
+    } catch (error) {
+      console.error("Failed to toggle like:", error);
+    }
+  };
 
   if (!post) {
     return <div className={styles.loading}>Loading...</div>;
@@ -188,11 +214,20 @@ function PostPage() {
       />
 
       <div className={styles.commentOrRate}>
-        <CommentEditor userInfo={userInfo} id={id} fetchComments={fetchComments} />
-        <RatingComponent userInfo={userInfo} id={id}  />
+        <CommentEditor
+          userInfo={userInfo}
+          id={id}
+          fetchComments={fetchComments}
+        />
+        <RatingComponent userInfo={userInfo} id={id} />
       </div>
-      <CommentsDisplay comments={comments} deleteComment={deleteComment} />
-
+      <CommentsDisplay
+        comments={comments}
+        deleteComment={deleteComment}
+        toggleLike={toggleLike}
+        fetchComments={fetchComments}
+        userId={userInfo.user_id}
+      />
     </div>
   );
 }
