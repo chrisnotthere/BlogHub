@@ -4,10 +4,10 @@ import {
   getExistingRating,
   updateRating,
   getRatingByPostIdAndUserId as getRating,
-  getAverageRatingByPostId as getAvgRating,
+  getRatingSummaryByPostId,
 } from "../services/rating.service";
 
-export const postRatingController = async (req: Request, res: Response) => {
+export const upsertRatingController = async (req: Request, res: Response) => {
   const { postId, userId, rating } = req.body;
 
   try {
@@ -55,14 +55,14 @@ export const getRatingByPostIdAndUserIdController = async (
   }
 };
 
-export const getAverageRatingByPostIdController = async (
+export const getRatingSummaryByPostIdController = async (
   req: Request,
   res: Response
 ) => {
   const postId: number = Number(req.params.postId);
 
   try {
-    const avgRating = await getAvgRating(postId);
+    const avgRating = await getRatingSummaryByPostId(postId);
 
     if (avgRating !== null) {
       res.send({ data: avgRating });

@@ -36,14 +36,20 @@ export const getRatingByPostIdAndUserId = async (postId: number, userId: number)
   }
 };
 
-export const getAverageRatingByPostId = async (postId: number): Promise<number | null> => {
-  const query = "SELECT AVG(rating) AS avgRating FROM ratings WHERE post_id = ?";
+export const getRatingSummaryByPostId = async (postId: number): Promise<{ averageRating: number | null, numberOfRatings: number }> => {
+  const query = "SELECT AVG(rating) AS avgRating, COUNT(rating) AS numberOfRatings FROM ratings WHERE post_id = ?";
   const [rows]: any[] = await db.query(query, [postId]);
 
-  if (rows.length > 0) {
-    return rows[0].avgRating;
+  if (rows.length > 0 && rows[0].numberOfRatings > 0) {
+    return {
+      averageRating: rows[0].avgRating,
+      numberOfRatings: rows[0].numberOfRatings
+    };
   } else {
-    // If no rating was found, return null
-    return null;
+    // If no rating was found, return null for average and 0 for count
+    return {
+      averageRating: null,
+      numberOfRatings: 0
+    };
   }
 };

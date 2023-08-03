@@ -1,14 +1,14 @@
 import express from "express";
 import {
-  getAverageRatingByPostIdController,
+  getRatingSummaryByPostIdController,
   getRatingByPostIdAndUserIdController,
-  postRatingController,
+  upsertRatingController,
 } from "../controllers/rating.controller";
 
 const router = express.Router();
 
-router.get("/avgPostRating/:postId", getAverageRatingByPostIdController);
+router.get("/ratingSummary/:postId", getRatingSummaryByPostIdController);
 router.get("/:postId/:userId", getRatingByPostIdAndUserIdController);
-router.post("/", postRatingController);
+router.post("/", upsertRatingController);
 
 export default router;
