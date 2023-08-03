@@ -31,9 +31,10 @@ export const fetchAllComments = async (postId: number): Promise<Comment[]> => {
   if (rows.length > 0) {
     return rows as Comment[];
   } else {
-    throw new Error("Error in fetching comments");
+    return [];
   }
 };
+
 
 /**
  * Removes a comment with the given ID from the database.
