@@ -10,7 +10,7 @@ import {
 import { User } from "../models/user.model";
 
 // Register a new user, storing their username, hashed password, and role
-export const registerUser = async (req: Request, res: Response) => {
+export const registerUserController = async (req: Request, res: Response) => {
   const { username, password, role } = req.body;
 
   if (!username || !password || !role) {
@@ -36,7 +36,7 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 // Log in a user, creating a new JWT for them
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUserController = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -80,9 +80,8 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-
 // Log out a user by clearing their JWT from the cookie
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUserController = async (req: Request, res: Response) => {
   try {
     res.clearCookie("token");
     res.json({ message: "User logged out successfully." });
@@ -93,7 +92,7 @@ export const logoutUser = async (req: Request, res: Response) => {
 };
 
 // Retrieve a user's information using their JWT
-export const getUser = async (req: Request, res: Response) => {
+export const getUserController = async (req: Request, res: Response) => {
   // console.log("getUser")
   try {
     const token = req.cookies.token;

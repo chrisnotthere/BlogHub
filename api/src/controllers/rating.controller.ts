@@ -4,10 +4,10 @@ import {
   getExistingRating,
   updateRating,
   getRatingByPostIdAndUserId as getRating,
-  getAverageRatingByPostId as getAvgRating, 
+  getAverageRatingByPostId as getAvgRating,
 } from "../services/rating.service";
 
-export const postRating = async (req: Request, res: Response) => {
+export const postRatingController = async (req: Request, res: Response) => {
   const { postId, userId, rating } = req.body;
 
   try {
@@ -30,13 +30,16 @@ export const postRating = async (req: Request, res: Response) => {
   }
 };
 
-export const getRatingByPostIdAndUserId = async (req: Request, res: Response) => {
+export const getRatingByPostIdAndUserIdController = async (
+  req: Request,
+  res: Response
+) => {
   const postId: number = parseInt(req.params.postId);
   const userId: number = parseInt(req.params.userId);
 
   // Check if postId and userId are valid numbers
   if (isNaN(postId) || isNaN(userId)) {
-    res.status(400).send({ message: 'Invalid post ID or user ID' });
+    res.status(400).send({ message: "Invalid post ID or user ID" });
     return;
   }
 
@@ -46,12 +49,16 @@ export const getRatingByPostIdAndUserId = async (req: Request, res: Response) =>
     res.send({ data: rating });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: 'There was an error processing your request' });
+    res
+      .status(500)
+      .send({ message: "There was an error processing your request" });
   }
 };
 
-
-export const getAverageRatingByPostId = async (req: Request, res: Response) => {
+export const getAverageRatingByPostIdController = async (
+  req: Request,
+  res: Response
+) => {
   const postId: number = Number(req.params.postId);
 
   try {
@@ -60,11 +67,12 @@ export const getAverageRatingByPostId = async (req: Request, res: Response) => {
     if (avgRating !== null) {
       res.send({ data: avgRating });
     } else {
-      res.status(404).send({ message: 'No ratings found for this post' });
+      res.status(404).send({ message: "No ratings found for this post" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: 'There was an error processing your request' });
+    res
+      .status(500)
+      .send({ message: "There was an error processing your request" });
   }
 };
-

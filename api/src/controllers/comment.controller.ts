@@ -8,7 +8,7 @@ import {
 } from "../services/comment.service";
 import { Comment } from "../models/comment.model";
 
-export const createComment = async (req: Request, res: Response) => {
+export const createCommentController = async (req: Request, res: Response) => {
   const { post_id, user_id, author, content } = req.body as Partial<Comment>;
 
   if (!post_id || !user_id || !author || !content) {
@@ -27,7 +27,7 @@ export const createComment = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllComments = async (req: Request, res: Response) => {
+export const getAllCommentsController = async (req: Request, res: Response) => {
   const { postId } = req.params;
 
   if (!postId) {
@@ -44,7 +44,7 @@ export const getAllComments = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteComment = async (req: Request, res: Response) => {
+export const deleteCommentController = async (req: Request, res: Response) => {
   const commentId = parseInt(req.params.commentId);
   if (isNaN(commentId)) {
     return res.status(400).send({ error: "Invalid id" });

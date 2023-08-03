@@ -1,19 +1,27 @@
 import express from "express";
 import {
-  createPost,
-  deletePost,
-  getAllPosts,
-  getPost,
-  updatePost,
+  createPostController,
+  deletePostController,
+  getAllPostsController,
+  getPostController,
+  updatePostController,
 } from "../controllers/blog.controller";
 import { upload } from "../config/middleware";
 
 const router = express.Router();
 
-router.get("/allPosts", getAllPosts);
-router.get("/post/:id", getPost);
-router.post("/createPost", upload.fields([{ name: 'image', maxCount: 1 }]), createPost);
-router.put("/updatePost/:id", upload.fields([{ name: 'image', maxCount: 1 }]), updatePost);
-router.delete("/deletePost/:id", deletePost);
+router.get("/allPosts", getAllPostsController);
+router.get("/post/:id", getPostController);
+router.post(
+  "/createPost",
+  upload.fields([{ name: "image", maxCount: 1 }]),
+  createPostController
+);
+router.put(
+  "/updatePost/:id",
+  upload.fields([{ name: "image", maxCount: 1 }]),
+  updatePostController
+);
+router.delete("/deletePost/:id", deletePostController);
 
 export default router;

@@ -1,17 +1,17 @@
 import express from "express";
 import {
   checkIfUserLikedController,
-  createComment,
-  deleteComment,
-  getAllComments,
+  createCommentController,
+  deleteCommentController,
+  getAllCommentsController,
   likeToggleController,
 } from "../controllers/comment.controller";
 
 const router = express.Router();
 
-router.post("/create", createComment);
-router.get("/allComments/:postId", getAllComments);
-router.delete("/delete/:commentId", deleteComment);
+router.post("/create", createCommentController);
+router.get("/allComments/:postId", getAllCommentsController);
+router.delete("/delete/:commentId", deleteCommentController);
 
 router.post("/likeToggle", likeToggleController);
 router.post("/checkIfUserLiked/", checkIfUserLikedController);
