@@ -13,6 +13,7 @@ interface PostComponentProps {
 export function PostComponent({ post, handleDelete }: PostComponentProps) {
   const [avgRating, setAvgRating] = useState<number | null>(null);
   const [numberOfRatings, setNumberOfRatings] = useState<number | null>(null);
+  const [numberOfComments, setNumberOfComments] = useState<number | null>(null);
   const { userInfo } = useContext(UserContext);
   const contentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -54,8 +55,22 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
     }
   };
 
+  const fetchNumberOfComments = async () => {
+    const response = await fetch(
+      `http://localhost:5000/comment/allComments/${post.id}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      setNumberOfComments(data.data.length);
+    } else {
+      const err = await response.text();
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchRatingSummary();
+    fetchNumberOfComments();
   }, []);
 
   // fade content text if too long
@@ -137,9 +152,13 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
                   numberOfRatings === 1 ? "Review" : "Reviews"
                 } - ${avgRating ? avgRating.toFixed(1) : "N/A"} Average`}
           </p>
-          <p className={styles.link}>
-            <Link to={`/post/${post.id}#ratings`}>
-              Leave a comment or a rating
+          <p>
+            <Link to={`/post/${post.id}#comments`}>
+              {numberOfComments === 0
+                ? "0 Comments"
+                : `${numberOfComments} ${
+                    numberOfComments === 1 ? "Comment" : "Comments"
+                  }`}
             </Link>
           </p>
         </div>

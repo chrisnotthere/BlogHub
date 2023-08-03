@@ -83,10 +83,20 @@ export default function CommentsDisplay({
     });
   }, [comments, userId]);
 
+  // scroll to comments if URL hash is '#comments'
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#comments') {
+      const element = document.getElementById('comments') as HTMLElement;
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, []);
+
   return (
     <div className={styles.commentsContainer}>
-      <h1 className={styles.title}>Comments</h1>
-
+      <h1 id="comments" className={styles.title}>Comments</h1>
       {Array.isArray(comments) &&
         comments
           .slice(0)
