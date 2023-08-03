@@ -35,18 +35,37 @@ export const fetchAllComments = async (postId: number): Promise<Comment[]> => {
   }
 };
 
-export const removeComment = async (id: number): Promise<void> => {
+/**
+ * Removes a comment with the given ID from the database.
+ *
+ * This function may be used within the context of a larger transaction, such as when deleting
+ * a post along with its related comments. The transaction context can be passed as an optional parameter.
+ *
+ * Steps performed by the function:
+ * 1. Verifies that the provided ID is a number.
+ * 2. If a transaction context is provided, it uses that context; otherwise, it uses the default database connection.
+ * 3. Deletes all likes associated with the comment from the 'comment_likes' table.
+ * 4. Deletes the comment itself from the 'comments' table.
+ */
+export const removeComment = async (
+  id: number,
+  transaction?: any
+): Promise<void> => {
   if (isNaN(id)) {
     throw new Error("Comment id is not a number");
   }
 
+  // use the transaction context if provided
+  const context = transaction || db;
+
   // delete all likes associated with this comment
-  await db.query("DELETE FROM comment_likes WHERE comment_id = ?", [id]);
+  await context.query("DELETE FROM comment_likes WHERE comment_id = ?", [id]);
 
   // then, delete the comment itself
-  const [result]: any = await db.query("DELETE FROM comments WHERE id = ?", [
-    id,
-  ]);
+  const [result]: any = await context.query(
+    "DELETE FROM comments WHERE id = ?",
+    [id]
+  );
 
   if (!result.affectedRows) {
     throw new Error("Error in deleting comment, or comment not found");
