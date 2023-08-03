@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import styles from '../../assets/styles/indexpage.module.css'
+import styles from "../../assets/styles/indexpage.module.css";
 
 interface PostComponentProps {
   post: Post;
@@ -12,6 +12,7 @@ interface PostComponentProps {
 
 export function PostComponent({ post, handleDelete }: PostComponentProps) {
   const [avgRating, setAvgRating] = useState<number | null>(null);
+  const [numberOfRatings, setNumberOfRatings] = useState<number | null>(null);
   const { userInfo } = useContext(UserContext);
   const contentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -38,34 +39,36 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
     handleDelete(postId);
   };
 
-  // get average rating
-  const fetchAvgPostRating = async () => {
+  // get rating info, average and number of ratings
+  const fetchRatingSummary = async () => {
     const response = await fetch(
-      `http://localhost:5000/rating/avgPostRating/${post.id}`
+      `http://localhost:5000/rating/ratingSummary/${post.id}`
     );
     if (response.ok) {
       const data = await response.json();
-      setAvgRating(Number(data.data));
+      setAvgRating(Number(data.data.averageRating));
+      setNumberOfRatings(Number(data.data.numberOfRatings));
     } else {
       const err = await response.text();
-      console.log(err)
+      console.log(err);
     }
   };
 
   useEffect(() => {
-    fetchAvgPostRating();
+    fetchRatingSummary();
   }, []);
 
   // fade content text if too long
   useEffect(() => {
-    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const rootFontSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
     const threshold = 3 * rootFontSize;
-  
+
     if (contentRef.current && contentRef.current.offsetHeight > threshold) {
       contentRef.current.classList.add(styles.faded);
     }
   }, [post.content]);
-  
 
   return (
     <div className={styles.post}>
@@ -113,7 +116,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
           </svg>
         </div>
       </div>
-  
+
       <div className={styles.postContent}>
         <div
           className={styles.content}
@@ -123,19 +126,24 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
           ref={contentRef}
         />
       </div>
-  
+
       <div className={styles.postFoot}>
         <p className={styles.author}>By {post.author}</p>
         <div className={styles.rating}>
           <p>
-            Average rating: {avgRating ? avgRating.toFixed(2) : "N/A"}
+            {numberOfRatings === 0
+              ? "0 Reviews"
+              : `${numberOfRatings} ${
+                  numberOfRatings === 1 ? "Review" : "Reviews"
+                } - ${avgRating ? avgRating.toFixed(1) : "N/A"} Average`}
           </p>
           <p className={styles.link}>
-            <Link to={`/post/${post.id}#ratings`}>Leave a comment or a rating</Link>
+            <Link to={`/post/${post.id}#ratings`}>
+              Leave a comment or a rating
+            </Link>
           </p>
         </div>
       </div>
     </div>
   );
-  
 }

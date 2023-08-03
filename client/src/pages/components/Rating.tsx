@@ -66,11 +66,12 @@ export default function RatingComponent({id, userInfo}: RatingComponentProps) {
   // fetch average rating
   const fetchAvgPostRating = async () => {
     const response = await fetch(
-      `http://localhost:5000/rating/avgPostRating/${id}`
+      `http://localhost:5000/rating/ratingSummary/${id}`
     );
     if (response.ok) {
       const data = await response.json();
-      setAvgRating(Number(data.data));
+      // console.log(data)
+      setAvgRating(Number(data.data.averageRating));
     } else {
       const err = await response.text();
       console.log(err);
@@ -87,7 +88,7 @@ export default function RatingComponent({id, userInfo}: RatingComponentProps) {
     <div className={styles.postRatingContainer}>
       <div className={styles.postAverageRating}>
         <p>
-          Post Rating: {avgRating ? avgRating.toFixed(2) : "No ratings yet"}
+          Rating: {avgRating ? avgRating.toFixed(2) : "No ratings yet"}
         </p>
       </div>
       <div className={styles.postRating}>
