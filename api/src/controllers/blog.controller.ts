@@ -31,7 +31,18 @@ export const getPostController = async (req: Request, res: Response) => {
 export const createPostController = async (req: Request, res: Response) => {
   try {
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-    const newPostData = { ...req.body, image: files["image"][0].path };
+
+    // Check if a file has been uploaded or a default image is being used
+    let imagePath;
+    if (files["image"] && files["image"][0]) {
+      imagePath = files["image"][0].path;
+    } else if (req.body.image === 'images/default.webp') {
+      imagePath = req.body.image;
+    } else {
+      return res.status(400).send({ message: "No image provided." });
+    }
+
+    const newPostData = { ...req.body, image: imagePath };
     const newPost = await insertPost(newPostData);
     res.send({ data: newPost, message: "post created" });
   } catch (err) {
