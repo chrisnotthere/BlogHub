@@ -29,3 +29,21 @@ form input {
   background: white;
 }
 
+.defaultContainer {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .8rem;
+}
+
+.imageErrorMessage {
+  color: red;
+  font-size: .9rem;
+  margin-top: 1rem;
+}
+
+.contentErrorMessage{
+  color: red;
+  font-size: .9rem;
+  margin-bottom: .75rem;
+}
