@@ -29,6 +29,11 @@ form input {
   background: white;
 }
 
+.currentImage {
+  margin-top: .5rem;
+  font-size: .8rem;
+}
+
 .defaultContainer {
   display: flex;
   align-items: center;
