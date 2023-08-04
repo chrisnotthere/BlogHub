@@ -62,9 +62,14 @@ nav ul li a, .linkButton {
 
 .inactiveLink {
   color: rgb(178, 178, 178);
+  font-size: .9rem;
   pointer-events: none; /* Makes it un-clickable */
 }
 
 .linkButton:hover, nav ul li a:hover{
   text-decoration: underline;
+}
+
+.username {
+  font-size: .9rem;
 }
