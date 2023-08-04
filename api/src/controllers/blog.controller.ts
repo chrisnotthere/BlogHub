@@ -51,17 +51,20 @@ export const createPostController = async (req: Request, res: Response) => {
   }
 };
 
-export const updatePostController = async (req: Request, res: Response) => {
+export const updatePostController = async (req: Request, res: Response) => {  
   try {
-    const { title, content, author, user_id } = req.body;
+    const { title, content, author, user_id, useExistingImage } = req.body;
     const id = Number(req.params.id); // convert id to a number
-    const image = (req.files as { [fieldname: string]: Express.Multer.File[] })[
-      "image"
-    ]
-      ? (req.files as { [fieldname: string]: Express.Multer.File[] })[
-          "image"
-        ][0].path
-      : undefined;
+
+    let image;
+    if (useExistingImage === "true") {
+      // Retrieve the existing image URL from the database
+      const existingPost = await fetchPost(id);
+      image = existingPost.image;
+    } else if (req.files && (req.files as { [fieldname: string]: Express.Multer.File[] })["image"]) {
+      image = (req.files as { [fieldname: string]: Express.Multer.File[] })["image"][0].path;
+    }
+
     const updatedPost = await editPost({
       id,
       title,
@@ -70,6 +73,7 @@ export const updatePostController = async (req: Request, res: Response) => {
       user_id,
       image,
     });
+
     res.send({ data: updatedPost, message: "post updated" });
   } catch (err) {
     console.log(err);

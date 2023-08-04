@@ -46,23 +46,26 @@ function EditPost() {
 
   async function updatePost(e: { preventDefault: () => void }) {
     e.preventDefault();
-
+  
     if (!content.trim()) {
       setContentError("Blog content cannot be empty.");
       return;
     }
-
+  
     const formData = new FormData();
     formData.set("title", title);
     formData.set("content", content);
     formData.set("author", userInfo.username);
-
+  
     if (useDefaultImage) {
       formData.set("image", "images/default.webp");
     } else if (image) {
       formData.set("image", image[0]);
+    } else if (existingImage) {
+      // use existing image if no new image is selected and default is not chosen
+      formData.set("useExistingImage", "true");
     }
-
+  
     const response = await fetch(
       `http://localhost:5000/posts/updatePost/${id}`,
       {
@@ -75,6 +78,7 @@ function EditPost() {
       setRedirect(true);
     }
   }
+  
 
   if (redirect) {
     return <Navigate to={`/post/${id}`} />;
