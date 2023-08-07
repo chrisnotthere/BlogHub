@@ -97,7 +97,12 @@ export default function CommentsDisplay({
   return (
     <div className={styles.commentsContainer}>
       <h1 id="comments" className={styles.title}>Comments</h1>
-      {Array.isArray(comments) &&
+      {Array.isArray(comments) && comments.length === 0 ? (
+        <div className={styles.noComments}>
+          <p>No comments yet.</p>
+          <p>Be the first to share your thoughts!</p>
+        </div>
+      ) : (
         comments
           .slice(0)
           .reverse()
@@ -157,7 +162,8 @@ export default function CommentsDisplay({
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        )}
     </div>
   );
 }
