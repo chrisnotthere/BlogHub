@@ -5,12 +5,13 @@ import {
   logoutUserController,
   registerUserController,
 } from "../controllers/auth.controller";
+import { authenticateJWT } from "../controllers/authMiddleware";
 
 const router = express.Router();
 
 router.post("/register", registerUserController);
 router.post("/login", loginUserController);
-router.post("/logout", logoutUserController);
-router.get("/user", getUserController);
+router.post("/logout", authenticateJWT, logoutUserController);
+router.get("/user", authenticateJWT, getUserController);
 
 export default router;

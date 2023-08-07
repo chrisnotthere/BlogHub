@@ -6,14 +6,15 @@ import {
   getAllCommentsController,
   likeToggleController,
 } from "../controllers/comment.controller";
+import { authenticateJWT } from "../controllers/authMiddleware";
 
 const router = express.Router();
 
-router.post("/create", createCommentController);
+router.post("/create", authenticateJWT, createCommentController);
 router.get("/allComments/:postId", getAllCommentsController);
-router.delete("/delete/:commentId", deleteCommentController);
+router.delete("/delete/:commentId", authenticateJWT, deleteCommentController);
 
-router.post("/likeToggle", likeToggleController);
+router.post("/likeToggle", authenticateJWT, likeToggleController);
 router.post("/checkIfUserLiked/", checkIfUserLikedController);
 
 export default router;
