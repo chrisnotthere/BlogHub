@@ -37,7 +37,7 @@ function PostPage() {
   // delete post if authorized
   const handleDelete = async (id: number) => {
     if (userInfo.role !== "admin" && userInfo.user_id !== post?.user_id) {
-      alert("You can only delete posts you've authored!");
+      alert("You can only delete posts you've authored.");
       return;
     }
 
@@ -70,7 +70,7 @@ function PostPage() {
   // edit post if authorized
   const handleEdit = (id: number) => {
     if (userInfo.role !== "admin" && userInfo.user_id !== post?.user_id) {
-      alert("You can only edit posts you've authored!");
+      alert("You can only edit posts you've authored.");
       return;
     }
 
@@ -104,7 +104,7 @@ function PostPage() {
   // delete comment
   const deleteComment = async (id: number, user_id: number) => {
     if (userInfo.role !== "admin" && userInfo.user_id !== user_id) {
-      alert("You can only delete comments you've authored!");
+      alert("You can only delete comments you've authored.");
       return;
     }
 
@@ -130,7 +130,7 @@ function PostPage() {
 
   const toggleLike = async (commentId: number, userId: number) => {
     if (!userInfo.isLoggedIn) {
-      alert("You must be logged in to like a comment!");
+      alert("You must be logged in to like a comment.");
       return;
     }
 

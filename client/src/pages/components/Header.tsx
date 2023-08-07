@@ -28,8 +28,17 @@ export default function Header() {
         <ul className={styles.navTop}>
           <li>
             <Link
-              to="/create-post"
+              to={userInfo.isLoggedIn ? "/create-post" : "#"}
               className={userInfo.isLoggedIn ? "" : styles.inactiveLink}
+              onClick={(e) => {
+                if (
+                  userInfo.isLoggedIn &&
+                  !(userInfo.role === "admin" || userInfo.role === "writer")
+                ) {
+                  e.preventDefault();
+                  alert("You must be an admin or writer to create a post.");
+                }
+              }}
             >
               Create Post
             </Link>
