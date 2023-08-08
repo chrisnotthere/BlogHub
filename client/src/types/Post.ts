@@ -9,13 +9,12 @@ export interface Post {
 }
 
 export const TAGS = [
-  'technology',
-  'food',
-  'health & wellness',
-  'travel',
-  'business',
-  'arts & culture',
-  'education',
-  'social & political',
-  'miscellaneous'
+  'Technology',
+  'Food',
+  'Health',
+  'Travel',
+  'Business',
+  'Entertainment',
+  'Education',
+  'Miscellaneous'
 ];
