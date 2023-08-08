@@ -53,7 +53,7 @@ export const createPostController = async (req: Request, res: Response) => {
 
 export const updatePostController = async (req: Request, res: Response) => {  
   try {
-    const { title, content, author, user_id, useExistingImage } = req.body;
+    const { title, content, author, user_id, useExistingImage, tags } = req.body;
     const id = Number(req.params.id); // convert id to a number
 
     let image;
@@ -72,6 +72,7 @@ export const updatePostController = async (req: Request, res: Response) => {
       author,
       user_id,
       image,
+      tags
     });
 
     res.send({ data: updatedPost, message: "post updated" });

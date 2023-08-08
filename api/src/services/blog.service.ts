@@ -21,6 +21,7 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
       author: row.author,
       user_id: row.user_id,
       image: row.image,
+      tags: row.tags,
     } as Post;
   });
 };
@@ -38,14 +39,15 @@ export const fetchPost = async (id: number): Promise<Post> => {
     author: rows[0].author,
     user_id: rows[0].user_id,
     image: rows[0].image,
+    tags: rows[0].tags,
   } as Post;
 };
 
 export const insertPost = async (post: Post): Promise<Post> => {
-  const { title, content, author, user_id, image } = post;
+  const { title, content, author, user_id, image, tags } = post;
   const [result]: [ResultSetHeader, FieldPacket[]] = await db.query(
     "INSERT INTO posts SET ?",
-    { title, content, author, user_id, image }
+    { title, content, author, user_id, image, tags }
   );
 
   return {
@@ -55,16 +57,17 @@ export const insertPost = async (post: Post): Promise<Post> => {
     author,
     user_id,
     image,
+    tags,
   } as Post;
 };
 
 export const editPost = async (post: Post): Promise<Post> => {
   console.log("editPost");
-  const { id, title, content, image } = post;
+  const { id, title, content, image, tags } = post;
 
   try {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query(
-      "UPDATE posts SET title = ?, content = ?, image = ? WHERE id = ?",
+      "UPDATE posts SET title = ?, content = ?, image = ?, tags = ? WHERE id = ?",
       [title, content, image, id]
     );
   } catch (error) {
@@ -76,6 +79,7 @@ export const editPost = async (post: Post): Promise<Post> => {
     title,
     content,
     image,
+    tags,
   } as Post;
 };
 
