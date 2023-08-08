@@ -5,4 +5,17 @@ export interface Post {
   author: string;
   user_id: number;
   image: string;
+  tags: string;
 }
+
+export const TAGS = [
+  'technology',
+  'food',
+  'health & wellness',
+  'travel',
+  'business',
+  'arts & culture',
+  'education',
+  'social & political',
+  'miscellaneous'
+];
