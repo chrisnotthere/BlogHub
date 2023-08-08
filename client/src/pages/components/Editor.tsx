@@ -1,7 +1,7 @@
 import 'react-quill/dist/quill.snow.css';
 import React, { FC } from "react";
 import ReactQuill from "react-quill";
-import styles from '../../assets/styles/create-post.module.css'
+import styles from '../../assets/styles/create-edit-post.module.css'
 
 interface EditorProps {
   value: string;

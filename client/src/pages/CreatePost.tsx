@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Editor from "./components/Editor";
-import styles from "../assets/styles/create-post.module.css";
+import styles from "../assets/styles/create-edit-post.module.css";
 import { UserContext } from "../context/UserContext";
 import { TAGS } from "../types/Post";
 import ReactSelect from "react-select";
