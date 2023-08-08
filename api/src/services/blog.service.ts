@@ -62,13 +62,12 @@ export const insertPost = async (post: Post): Promise<Post> => {
 };
 
 export const editPost = async (post: Post): Promise<Post> => {
-  console.log("editPost");
   const { id, title, content, image, tags } = post;
 
   try {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await db.query(
       "UPDATE posts SET title = ?, content = ?, image = ?, tags = ? WHERE id = ?",
-      [title, content, image, id]
+      [title, content, image, tags, id]
     );
   } catch (error) {
     console.log(error);
