@@ -12,6 +12,7 @@ import { Comment } from "../types/Comment";
 function PostPage() {
   let { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { userInfo } = useContext(UserContext);
@@ -25,6 +26,7 @@ function PostPage() {
       if (response.ok) {
         const data = await response.json();
         setPost(data.data);
+        if (data.data.tags) setTags(data.data.tags.split(","));
       } else {
         const err = await response.text();
         console.log(err);
@@ -215,6 +217,17 @@ function PostPage() {
           __html: DOMPurify.sanitize(post.content),
         }}
       />
+
+      {tags.length > 0 && (
+        <div className={styles.tagsContainer}>
+          <p>Tags</p>
+          {tags.map((tag) => (
+            <div className={styles.tag} key={tag}>
+              {tag}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className={styles.commentOrRate}>
         <CommentEditor

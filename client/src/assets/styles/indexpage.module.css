@@ -114,3 +114,22 @@
   font-size: 0.8rem;
   color: #777;
 }
+
+.tagsContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background-color: #d0e9e5;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.tag:hover {
+  background-color: #b8e1dc;
+  cursor: pointer;
+}

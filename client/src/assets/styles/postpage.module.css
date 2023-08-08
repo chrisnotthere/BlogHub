@@ -77,6 +77,29 @@
   word-wrap: break-word;
 }
 
+.tagsContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+  border-top: 1px solid #ddd;
+  padding-top: .5rem;
+}
+
+.tag {
+  background-color: #d0e9e5;
+  padding: .5rem;
+  border-radius: .5rem;
+  font-size: .7rem;
+  color: #333;
+}
+
+.tag:hover {
+  background-color: #c0e0dc;
+  cursor: pointer;
+}
+
 .commentOrRate {
   background-color: #ececec;
   display: flex;

@@ -14,6 +14,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
   const [avgRating, setAvgRating] = useState<number | null>(null);
   const [numberOfRatings, setNumberOfRatings] = useState<number | null>(null);
   const [numberOfComments, setNumberOfComments] = useState<number | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
   const { userInfo } = useContext(UserContext);
   const contentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -71,6 +72,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
   useEffect(() => {
     fetchRatingSummary();
     fetchNumberOfComments();
+    if (post.tags) setTags(post.tags.split(","));
   }, []);
 
   // fade content text if too long
@@ -141,6 +143,16 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
           ref={contentRef}
         />
       </div>
+
+      {tags.length > 0 && (
+        <div className={styles.tagsContainer}>
+          {tags.map((tag) => (
+            <div className={styles.tag} key={tag}>
+              {tag}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className={styles.postFoot}>
         <p className={styles.author}>By {post.author}</p>
