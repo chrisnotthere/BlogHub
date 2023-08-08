@@ -51,6 +51,7 @@ export default function CommentEditor({
         `http://localhost:5000/comment/create`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

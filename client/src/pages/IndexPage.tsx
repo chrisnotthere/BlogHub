@@ -14,7 +14,7 @@ function IndexPage() {
       if (response.ok) {
         const data = await response.json();
         setPosts(data.data);
-        console.log("all posts: ", data);
+        // console.log("all posts: ", data);
       } else {
         const message = await response.text();
         setError(message);
@@ -36,12 +36,12 @@ function IndexPage() {
         `http://localhost:5000/posts/deletePost/${id}`,
         {
           method: "DELETE",
+          credentials: 'include',
         }
       );
 
       if (response.ok) {
         const data = await response.json();
-        // console.log("delete data: ", data);
         setPosts(posts.filter((post) => post.id !== id));
       } else {
         const message = await response.text();

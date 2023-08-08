@@ -53,6 +53,7 @@ function PostPage() {
         `http://localhost:5000/posts/deletePost/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
 
@@ -113,6 +114,7 @@ function PostPage() {
         `http://localhost:5000/comment/delete/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
 
@@ -137,6 +139,7 @@ function PostPage() {
     try {
       const response = await fetch(`http://localhost:5000/comment/likeToggle`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

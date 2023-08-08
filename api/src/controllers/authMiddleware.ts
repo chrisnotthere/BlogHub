@@ -10,7 +10,9 @@ export const authenticateJWT = (
   res: Response,
   next: NextFunction
 ) => {
+  // console.log('authenticateJWT middleware')
   const token = req.cookies.token;
+  // console.log('token from request: ', token)
   if (token) {
     const secret = process.env.JWT_SECRET;
     try {

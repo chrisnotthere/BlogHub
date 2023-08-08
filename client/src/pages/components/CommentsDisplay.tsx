@@ -109,7 +109,7 @@ export default function CommentsDisplay({
           .map((comment) => (
             <div key={comment.id} className={styles.commentContainer}>
               <div className={styles.commentHeader}>
-                <h3>Author: {comment.author}</h3>
+                <h3>{comment.author}</h3>
                 <span>{formatDate(comment.created_at)}</span>
               </div>
               <div
