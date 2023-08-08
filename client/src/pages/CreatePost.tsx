@@ -3,22 +3,42 @@ import { Navigate } from "react-router-dom";
 import Editor from "./components/Editor";
 import styles from "../assets/styles/create-post.module.css";
 import { UserContext } from "../context/UserContext";
+import { TAGS } from "../types/Post";
+import ReactSelect from "react-select";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<FileList | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
   const [useDefaultImage, setUseDefaultImage] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [imageError, setImageError] = useState("");
   const [contentError, setContentError] = useState("");
+  const [postError, setPostError] = useState("");
 
   const { userInfo } = useContext(UserContext);
   const fileInputRef = useRef(null);
 
+  const options = TAGS.map((tag) => ({
+    label: tag,
+    value: tag,
+  })) as { label: string; value: string }[];
+
+  const customStyles = {
+    option: (provided: any, state: any) => ({
+      ...provided,
+      fontSize: ".8rem",
+    }),
+    singleValue: (provided: any, state: any) => ({
+      ...provided,
+      fontSize: ".8rem",
+    }),
+  };
+
   const handleUseDefaultImage = () => {
     setUseDefaultImage(true);
-    setImage(null); 
+    setImage(null);
     setImageError("");
 
     // Clear file input if any
@@ -47,6 +67,7 @@ function CreatePost() {
     formData.set("content", content);
     formData.set("author", userInfo.username);
     formData.set("user_id", userInfo.user_id);
+    formData.set("tags", tags.join(","));
 
     if (useDefaultImage) {
       formData.set("image", "images/default.webp");
@@ -54,13 +75,24 @@ function CreatePost() {
       formData.set("image", image[0]);
     }
 
-    const response = await fetch("http://localhost:5000/posts/createPost", {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    });
-    if (response.ok) {
-      setRedirect(true);
+    try {
+      const response = await fetch("http://localhost:5000/posts/createPost", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setPostError(
+          errorData.message || "Something went wrong while creating the post."
+        );
+      } else {
+        setRedirect(true);
+      }
+    } catch (error) {
+      console.error(error);
+      setPostError("An unexpected error occurred. Please try again later.");
     }
   }
 
@@ -71,7 +103,6 @@ function CreatePost() {
   return (
     <div className={styles.createPost}>
       <form onSubmit={createNewPost}>
-
         <label htmlFor="title">Title</label>
         <input
           type="title"
@@ -102,14 +133,34 @@ function CreatePost() {
           <p>{useDefaultImage ? "Default image selected" : ""}</p>
         </div>
 
-
         {imageError && <p className={styles.imageErrorMessage}>{imageError}</p>}
+
+        <div className={styles.tagsContainer}>
+          <label htmlFor="tags">Tags</label>
+          <ReactSelect
+            id="tags"
+            name="tags"
+            isMulti
+            options={options}
+            styles={customStyles}
+            onChange={(selectedOptions) => {
+              const selectedTags = selectedOptions.map(
+                (option) => option.value
+              );
+              setTags(selectedTags);
+            }}
+          />
+        </div>
 
         <div className={styles.quillContainer}>
           <Editor value={content} onChange={setContent} />
         </div>
 
-        {contentError && <p className={styles.contentErrorMessage}>{contentError}</p>}
+        {contentError && (
+          <p className={styles.contentErrorMessage}>{contentError}</p>
+        )}
+
+        {postError && <p className={styles.postErrorMessage}>{postError}</p>}
 
         <button>Create post</button>
       </form>
