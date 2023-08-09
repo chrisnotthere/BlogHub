@@ -1,12 +1,14 @@
 # BlogHub
 
-BlogHub is a blog CMS project built using TypeScript, React, Node/Express, and MySQL. It allows multiple users to post and edit blogs, rate and comment, filter, and more.
+BlogHub is a full-featured blog Content Management System (CMS) that empowers users to post, edit, rate, and engage with various blog content. Built with TypeScript, React, Node/Express, and MySQL, this project showcases modern web development practices and design patterns.
 
-Features include:
-  - user authentication and authorization
-  - user roles - admin, editor, blogger, user
-  - blog filtering (tags and categories), rating, and comments
-  - blogger profiles - recent/featured blogs, about, average rating, comments/interactions
+## Features
+  - **Authentication & Authorization:** Utilizes JSON Web Tokens (JWT) for secure user authentication and role-based authorization.
+  - **User Management:** Allows Registration, Login/Logout, and supports multiple roles, including member, writer, and admin, each with unique permissions.
+  - **Blog Management:** Enables users to Create, Read, Update, and Delete (CRUD) blog posts with ease.
+  - **Sort & Filter:** Offers the ability to filter blog posts by tags, and sort by date created.
+  - **Engagement:** Users can rate posts (up to 5 stars), create and delete comments, and like or unlike comments.
+  - **Pagination:** Implements pagination to navigate through blog posts.
 
 ## Project Structure
 
