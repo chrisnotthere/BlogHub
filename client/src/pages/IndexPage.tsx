@@ -7,6 +7,7 @@ import FilterAndSort from "./components/FilterAndSort";
 function IndexPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [error, setError] = useState<string | null>(null);
 
   const fetchPosts = async () => {
@@ -14,9 +15,10 @@ function IndexPage() {
 
     if (response.ok) {
       const data = await response.json();
-      setPosts(data.data);
-      setFilteredPosts(data.data);
-      console.log("all posts: ", data);
+      // sort posts by date
+      const sortedData = sortPosts(data.data, sortOrder);
+      setPosts(sortedData);
+      setFilteredPosts(sortedData);
     } else {
       const message = await response.text();
       setError(message);
@@ -81,6 +83,20 @@ function IndexPage() {
     [posts]
   );
 
+  const sortPosts = (posts: Post[], order: "asc" | "desc"): Post[] => {
+    return [...posts].sort((a, b) => {
+      const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+      const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+      return order === "asc" ? dateA - dateB : dateB - dateA;
+    });
+  };
+
+  const sortPostsByDate = (order: "asc" | "desc") => {
+    setSortOrder(order);
+    const sortedPosts = sortPosts(filteredPosts, order);
+    setFilteredPosts(sortedPosts);
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -88,7 +104,10 @@ function IndexPage() {
   return (
     <div className={styles.indexContainer}>
       <div className={styles.sortContainer}>
-        <FilterAndSort filterPostsByTags={filterPostsByTags} />
+        <FilterAndSort
+          filterPostsByTags={filterPostsByTags}
+          sortPostsByDate={sortPostsByDate}
+        />
       </div>
       <div className={styles.postContainer}>
         {filteredPosts.length === 0 ? (
@@ -97,15 +116,13 @@ function IndexPage() {
             <p>Be the first to create a post!</p>
           </div>
         ) : (
-          [...filteredPosts]
-            .reverse()
-            .map((post: Post) => (
-              <PostComponent
-                key={post.id}
-                post={post}
-                handleDelete={handleDelete}
-              />
-            ))
+          [...filteredPosts].map((post: Post) => (
+            <PostComponent
+              key={post.id}
+              post={post}
+              handleDelete={handleDelete}
+            />
+          ))
         )}
       </div>
     </div>

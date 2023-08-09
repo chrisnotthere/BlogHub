@@ -4,9 +4,10 @@ import { TAGS } from "../../types/Post";
 
 interface FilterAndSortProps {
   filterPostsByTags: (tags: string[]) => void;
+  sortPostsByDate: (order: 'asc' | 'desc') => void;
 }
 
-function FilterAndSort({ filterPostsByTags }: FilterAndSortProps) {
+function FilterAndSort({ filterPostsByTags, sortPostsByDate }: FilterAndSortProps) {
   const [tags] = useState<string[]>(TAGS);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -27,6 +28,11 @@ function FilterAndSort({ filterPostsByTags }: FilterAndSortProps) {
         : [...prevSelectedTags, tag];
       return newSelectedTags;
     });
+  };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const order = event.target.value as 'asc' | 'desc';
+    sortPostsByDate(order);
   };
 
   return (
@@ -50,6 +56,10 @@ function FilterAndSort({ filterPostsByTags }: FilterAndSortProps) {
 
       <div className={styles.sortContainer}>
         <p>Sort by</p>
+        <select onChange={handleSortChange}>
+          <option value="desc">Date (newest first)</option>
+          <option value="asc">Date (oldest first)</option>
+        </select>
       </div>
     </div>
   );
