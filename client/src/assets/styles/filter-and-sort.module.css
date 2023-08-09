@@ -24,14 +24,14 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   background-color: #d0e9e5;
-  padding: .5rem;
-  border-radius: .75rem;
-  font-size: .7rem;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.7rem;
   color: #333;
 }
 
 .selectedTag {
-  background-color: #b8e1dc;
+  background-color: #98cdc6;
   color: #000;
   border-radius: 0.25rem;
   cursor: pointer;
@@ -40,5 +40,4 @@
 }
 
 .sortContainer {
-
 }

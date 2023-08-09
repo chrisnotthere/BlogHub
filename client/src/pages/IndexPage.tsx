@@ -56,12 +56,14 @@ function IndexPage() {
     }
   };
 
-  // filter the posts based on the selected tags
+  /**
+   * Filters posts based on an array of tags. If no tags are provided, all posts will be shown.
+   * If tags are provided, only posts that include at least one of the tags will be shown.
+   *
+   * @param {string[]} tags - An array of tags to filter the posts by.
+   */
   const filterPostsByTags = useCallback(
     (tags: string[]) => {
-      console.log("Filtering with tags:", tags);
-      console.log("Checking if no posts to display", filteredPosts.length);
-
       // if no tags are selected, show all posts
       if (tags.length === 0) {
         setFilteredPosts(posts);
@@ -74,7 +76,6 @@ function IndexPage() {
           (tag) => post.tags && post.tags.split(",").includes(tag)
         );
       });
-      // console.log("Filtered posts:", filtered);
       setFilteredPosts(filtered);
     },
     [posts]
@@ -84,32 +85,28 @@ function IndexPage() {
     return <div>{error}</div>;
   }
 
-  // TODO: fix this
-  // if (filteredPosts.length === 0) {
-  //   return (
-  //     <div className={styles.indexContainer}>
-  //       <FilterAndSort filterPostsByTags={filterPostsByTags} />
-  //       <div className={styles.postContainer}>
-  //         <h2>No Posts to display</h2>
-  //         <p>Be the first to create a post!</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className={styles.indexContainer}>
       <div className={styles.sortContainer}>
         <FilterAndSort filterPostsByTags={filterPostsByTags} />
       </div>
       <div className={styles.postContainer}>
-        {[...filteredPosts].reverse().map((post: Post) => (
-          <PostComponent
-            key={post.id}
-            post={post}
-            handleDelete={handleDelete}
-          />
-        ))}
+        {filteredPosts.length === 0 ? (
+          <div>
+            <h2>No Posts to display</h2>
+            <p>Be the first to create a post!</p>
+          </div>
+        ) : (
+          [...filteredPosts]
+            .reverse()
+            .map((post: Post) => (
+              <PostComponent
+                key={post.id}
+                post={post}
+                handleDelete={handleDelete}
+              />
+            ))
+        )}
       </div>
     </div>
   );
