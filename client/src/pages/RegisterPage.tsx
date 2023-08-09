@@ -53,6 +53,7 @@ function RegisterPage() {
     <div className="form-container">
       <h1>REGISTER</h1>
       <form className="auth-form" onSubmit={handleSubmit}>
+        <label className="hidden" htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
@@ -61,6 +62,7 @@ function RegisterPage() {
           onChange={(e) => setUsername(e.target.value)}
           minLength={3}
         />
+        <label className="hidden" htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
