@@ -3,12 +3,21 @@ import { Post } from "../types/Post";
 import styles from "../assets/styles/indexpage.module.css";
 import { PostComponent } from "./components/Post";
 import FilterAndSort from "./components/FilterAndSort";
+import Pagination from "./components/Pagination";
 
 function IndexPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
+
+  // pagination data
+  const postsPerPage = 4;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   const fetchPosts = async () => {
     const response = await fetch("http://localhost:5000/posts/allPosts");
@@ -79,6 +88,7 @@ function IndexPage() {
         );
       });
       setFilteredPosts(filtered);
+      setCurrentPage(1); // reset to the first page
     },
     [posts]
   );
@@ -95,6 +105,7 @@ function IndexPage() {
     setSortOrder(order);
     const sortedPosts = sortPosts(filteredPosts, order);
     setFilteredPosts(sortedPosts);
+    setCurrentPage(1); // reset to the first page
   };
 
   if (error) {
@@ -110,13 +121,19 @@ function IndexPage() {
         />
       </div>
       <div className={styles.postContainer}>
-        {filteredPosts.length === 0 ? (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
+
+        {currentPosts.length === 0 ? (
           <div>
             <h2>No Posts to display</h2>
             <p>Be the first to create a post!</p>
           </div>
         ) : (
-          [...filteredPosts].map((post: Post) => (
+          [...currentPosts].map((post: Post) => (
             <PostComponent
               key={post.id}
               post={post}
@@ -124,6 +141,12 @@ function IndexPage() {
             />
           ))
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </div>
   );

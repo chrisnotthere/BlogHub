@@ -87,7 +87,7 @@
 .rating {
   width: 9rem;
   font-size: .7rem;
-  text-align: center;
+  text-align: end;
 }
 
 .link a {
@@ -147,4 +147,35 @@
 .tag:hover {
   background-color: #b8e1dc;
   cursor: pointer;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  max-width: 400px;
+  border: 1px solid #d0e9e5;
+  border-radius: 0.5rem;
+  background-color: #fff;
+}
+
+.paginationContainer button {
+  background: none;
+  border: 1px solid #d0e9e5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.paginationContainer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginationContainer button:hover:not(:disabled) {
+  background-color: #d0e9e5;
 }
