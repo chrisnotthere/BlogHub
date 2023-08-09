@@ -56,7 +56,7 @@ function FilterAndSort({ filterPostsByTags, sortPostsByDate }: FilterAndSortProp
 
       <div className={styles.sortContainer}>
         <p>Sort by</p>
-        <select onChange={handleSortChange}>
+        <select className={styles.sortSelect} onChange={handleSortChange}>
           <option value="desc">Date (newest first)</option>
           <option value="asc">Date (oldest first)</option>
         </select>

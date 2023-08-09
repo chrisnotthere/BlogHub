@@ -8,9 +8,14 @@
   box-sizing: border-box;
   border-radius: 0.25rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
 }
 
-.tagContainer {
+.tagContainer,
+.sortContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .tags {
@@ -39,5 +44,12 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.sortContainer {
+.sortSelect {
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 0.25rem;
+  border: 1px solid #d0e9e5;
+  background-color: #fff;
 }
