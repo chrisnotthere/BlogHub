@@ -6,6 +6,7 @@ export interface Post {
   user_id: number;
   image: string;
   tags: string;
+  created_at?: string;
 }
 
 export const TAGS = [

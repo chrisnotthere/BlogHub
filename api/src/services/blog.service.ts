@@ -22,6 +22,7 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
       user_id: row.user_id,
       image: row.image,
       tags: row.tags,
+      created_at: row.created_at,
     } as Post;
   });
 };
