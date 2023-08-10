@@ -1,14 +1,17 @@
+import dotenv from "dotenv";
+dotenv.config({ path: '../../.env.local' });
+
 import { User } from "../models/user.model";
 
 export const users: User[] = [
   {
     username: 'guestUser',
-    password: 'supersecret',
+    password: process.env.GUEST_PASSWORD as string,
     role: 'writer',
   },
   {
     username: 'guestAdmin',
-    password: 'adminsecret',
+    password: process.env.GUEST_ADMIN_PASSWORD as string,
     role: 'admin',
   },
   {
