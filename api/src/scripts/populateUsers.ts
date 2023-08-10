@@ -15,13 +15,33 @@ export const users: User[] = [
     role: 'admin',
   },
   {
-    username: 'user1',
-    password: 'password1',
+    username: 'johnDoe',
+    password: 'password123',
+    role: 'member',
+  },
+  {
+    username: 'janeSmith',
+    password: 'janePass456',
+    role: 'writer',
+  },
+  {
+    username: 'michaelBrown',
+    password: 'mikeB789',
     role: 'admin',
   },
   {
-    username: 'user2',
-    password: 'password2',
+    username: 'sarahJohnson',
+    password: 'sarahJ111',
     role: 'writer',
+  },
+  {
+    username: 'williamLee',
+    password: 'williamL222',
+    role: 'member',
+  },
+  {
+    username: 'emmaDavis',
+    password: 'emmaD333',
+    role: 'admin',
   },
 ];
