@@ -15,6 +15,11 @@ import { commentLikes } from "./populateCommentLikes";
 // cd api
 // ts-node src/scripts/populate.ts
 
+// Helper function to introduce delay
+const delay = (ms: number) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
 const createUsers = async () => {
   console.log("Creating users...");
   for (const user of users) {
@@ -34,6 +39,8 @@ const createPosts = async () => {
   for (const post of posts) {
     try {
       await insertPost(post);
+      // a delay to ensure that the posts are created in order
+      await delay(1000)
     } catch (error) {
       console.error("Error creating post:", error);
       throw new Error("Stopping due to post creation failure.");
