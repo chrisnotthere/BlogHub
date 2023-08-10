@@ -10,7 +10,7 @@ export interface Comment {
 }
 
 export interface CommentLike {
-  id: number;
+  id?: number;
   user_id: number;
   comment_id: number;
 }

@@ -20,6 +20,11 @@ export const insertRating = async (userId: number, postId: number, rating: numbe
   await db.query("INSERT INTO ratings (user_id, post_id, rating) VALUES (?, ?, ?)", [userId, postId, rating]);
 };
 
+export const createRating = async (rating: Rating): Promise<void> => {
+  const { user_id, post_id, rating: ratingValue } = rating;
+  await db.query("INSERT INTO ratings (user_id, post_id, rating) VALUES (?, ?, ?)", [user_id, post_id, ratingValue]);
+};
+
 export const updateRating = async (ratingId: number, rating: number): Promise<void> => {
   await db.query("UPDATE ratings SET rating = ? WHERE id = ?", [rating, ratingId]);
 };
