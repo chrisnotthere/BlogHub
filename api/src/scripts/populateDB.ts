@@ -18,7 +18,13 @@ import { commentLikes } from "./populateCommentLikes";
 const createUsers = async () => {
   console.log("Creating users...");
   for (const user of users) {
-    await createUser(user);
+    try {
+      await createUser(user);
+    } catch (error) {
+      console.error("Error creating user:", error);
+      // Stop the entire process if there is an error
+      throw new Error("Stopping due to user creation failure.");
+    }
   }
   console.log("Users created.");
 };
@@ -26,7 +32,12 @@ const createUsers = async () => {
 const createPosts = async () => {
   console.log("Creating posts...");
   for (const post of posts) {
-    await insertPost(post);
+    try {
+      await insertPost(post);
+    } catch (error) {
+      console.error("Error creating post:", error);
+      throw new Error("Stopping due to post creation failure.");
+    }
   }
   console.log("Posts created.");
 };
@@ -34,7 +45,12 @@ const createPosts = async () => {
 const createRatings = async () => {
   console.log("Creating ratings...");
   for (const rating of ratings) {
-    await createRating(rating);
+    try {
+      await createRating(rating);
+    } catch (error) {
+      console.error("Error creating rating:", error);
+      throw new Error("Stopping due to rating creation failure.");
+    }
   }
   console.log("Ratings created.");
 };
@@ -42,7 +58,12 @@ const createRatings = async () => {
 const createComments = async () => {
   console.log("Creating comments...");
   for (const comment of comments) {
-    await insertComment(comment);
+    try {
+      await insertComment(comment);
+    } catch (error) {
+      console.error("Error creating comment:", error);
+      throw new Error("Stopping due to comment creation failure.");
+    }
   }
   console.log("Comments created.");
 };
@@ -50,31 +71,26 @@ const createComments = async () => {
 const createCommentLikes = async () => {
   console.log("Creating comment likes...");
   for (const commentLike of commentLikes) {
-    await toggleLike(commentLike.user_id, commentLike.comment_id);
+    try {
+      await toggleLike(commentLike.user_id, commentLike.comment_id);
+    } catch (error) {
+      console.error("Error creating comment like:", error);
+      throw new Error("Stopping due to user comment like creation failure.");
+    }
   }
   console.log("Comment likes created.");
 };
 
 // Call the functions to populate the data
 createUsers()
+  .then(createPosts)
+  .then(createRatings)
+  .then(createComments)
+  .then(createCommentLikes)
   .then(() => {
-    console.log("Users populated.");
-    return createPosts();
-  })
-  .then(() => {
-    console.log("Posts populated.");
-    return createRatings();
-  })
-  .then(() => {
-    console.log("Ratings populated.");
-    return createComments();
-  })
-  .then(() => {
-    console.log("Comments populated.");
-    return createCommentLikes();
-  })
-  .then(() => {
-    console.log("Comment likes populated.");
     console.log("All data successfully populated.");
   })
-  .catch(console.error);
+  .catch((error) => {
+    console.error("Error populating data:", error);
+    process.exit(1); // Exit the script with an error code
+  });
