@@ -2,7 +2,7 @@
 
 # dependencies
 client/node_modules
-api/node_modules
+# api/node_modules
 /.pnp
 .pnp.js
 
@@ -26,4 +26,4 @@ yarn-error.log*
 # api/dist
 # api/images
 
-.env
+# .env
