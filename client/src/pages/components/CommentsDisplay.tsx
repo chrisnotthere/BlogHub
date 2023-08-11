@@ -45,7 +45,7 @@ export default function CommentsDisplay({
   const checkUserLiked = async (userId: number, commentId: number) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/comment/checkIfUserLiked",
+        `${process.env.REACT_APP_HEROKU_URL}comment/checkIfUserLiked`,
         {
           method: "POST",
           headers: {

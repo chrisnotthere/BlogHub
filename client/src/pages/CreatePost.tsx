@@ -76,7 +76,7 @@ function CreatePost() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/posts/createPost", {
+      const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}posts/createPost`, {
         method: "POST",
         body: formData,
         credentials: "include",

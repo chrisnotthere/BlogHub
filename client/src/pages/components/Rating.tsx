@@ -26,7 +26,7 @@ export default function RatingComponent({id, userInfo}: RatingComponentProps) {
       return;
     }
 
-    const response = await fetch("http://localhost:5000/rating", {
+    const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}rating`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -52,7 +52,7 @@ export default function RatingComponent({id, userInfo}: RatingComponentProps) {
     if (userInfo.isLoggedIn === false) return;
 
     const response = await fetch(
-      `http://localhost:5000/rating/${id}/${userInfo.user_id}`
+      `${process.env.REACT_APP_HEROKU_URL}rating/${id}/${userInfo.user_id}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -67,7 +67,7 @@ export default function RatingComponent({id, userInfo}: RatingComponentProps) {
   // fetch average rating
   const fetchAvgPostRating = async () => {
     const response = await fetch(
-      `http://localhost:5000/rating/ratingSummary/${id}`
+      `${process.env.REACT_APP_HEROKU_URL}rating/ratingSummary/${id}`
     );
     if (response.ok) {
       const data = await response.json();

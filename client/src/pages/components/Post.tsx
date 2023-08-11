@@ -44,7 +44,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
   // get rating info, average and number of ratings
   const fetchRatingSummary = async () => {
     const response = await fetch(
-      `http://localhost:5000/rating/ratingSummary/${post.id}`
+      `${process.env.REACT_APP_HEROKU_URL}rating/ratingSummary/${post.id}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -58,7 +58,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
 
   const fetchNumberOfComments = async () => {
     const response = await fetch(
-      `http://localhost:5000/comment/allComments/${post.id}`
+      `${process.env.REACT_APP_HEROKU_URL}comment/allComments/${post.id}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -93,7 +93,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
         <img
           alt={post.title}
           className={styles.postCover}
-          src={"http://localhost:5000/" + (post.image || "images/default.webp")}
+          src={process.env.REACT_APP_HEROKU_URL + (post.image || "images/default.webp")}
         />
       </Link>
       <div className={styles.postHead}>
