@@ -9,7 +9,7 @@ export const upload = multer({ dest: "images/" });
 export const applyMiddleware = (app: express.Application) => {
   app.use(
     cors({
-      origin: ["http://localhost:3000", "https://chrisnotthere.github.io/BlogHub"],
+      origin: ["http://localhost:3000", "https://chrisnotthere.github.io"],
       credentials: true, // server accepts cookies from the client
     })
   );
