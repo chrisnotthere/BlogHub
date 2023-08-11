@@ -9,7 +9,7 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:5000/auth/user", {
+        const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}auth/user`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: 'include', 

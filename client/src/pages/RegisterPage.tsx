@@ -25,7 +25,7 @@ function RegisterPage() {
     // send username, password, and role to server
     const registerUser = async () => {
       try {
-        const response = await fetch("http://localhost:5000/auth/register", {
+        const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}auth/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password, role }),

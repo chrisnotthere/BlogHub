@@ -38,7 +38,7 @@ function EditPost() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:5000/posts/post/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}posts/post/${id}`);
       if (response.ok) {
         const responseJson = await response.json();
         const data = responseJson.data;
@@ -87,7 +87,7 @@ function EditPost() {
     }
 
     const response = await fetch(
-      `http://localhost:5000/posts/updatePost/${id}`,
+      `${process.env.REACT_APP_HEROKU_URL}posts/updatePost/${id}`,
       {
         method: "PUT",
         body: formData,

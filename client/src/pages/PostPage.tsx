@@ -21,7 +21,7 @@ function PostPage() {
   // fetch individual post data
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:5000/posts/post/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}posts/post/${id}`);
 
       if (response.ok) {
         const data = await response.json();
@@ -52,7 +52,7 @@ function PostPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/posts/deletePost/${id}`,
+        `${process.env.REACT_APP_HEROKU_URL}posts/deletePost/${id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -83,7 +83,7 @@ function PostPage() {
   const fetchComments = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/comment/allComments/${id}`
+        `${process.env.REACT_APP_HEROKU_URL}comment/allComments/${id}`
       );
 
       if (response.ok) {
@@ -113,7 +113,7 @@ function PostPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/comment/delete/${id}`,
+        `${process.env.REACT_APP_HEROKU_URL}comment/delete/${id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -139,7 +139,7 @@ function PostPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/comment/likeToggle`, {
+      const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}comment/likeToggle`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -170,7 +170,7 @@ function PostPage() {
         <img
           alt={post.title}
           className={styles.postCover}
-          src={"http://localhost:5000/" + (post.image || "images/default.webp")}
+          src={process.env.REACT_APP_HEROKU_URL + (post.image || "images/default.webp")}
         />
       </div>
       <div className={styles.postTitle}>

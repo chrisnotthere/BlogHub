@@ -20,7 +20,7 @@ function IndexPage() {
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   const fetchPosts = async () => {
-    const response = await fetch("http://localhost:5000/posts/allPosts");
+    const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}posts/allPosts`);
 
     if (response.ok) {
       const data = await response.json();
@@ -48,7 +48,7 @@ function IndexPage() {
     }
     try {
       const response = await fetch(
-        `http://localhost:5000/posts/deletePost/${id}`,
+        `${process.env.REACT_APP_HEROKU_URL}posts/deletePost/${id}`,
         {
           method: "DELETE",
           credentials: "include",
