@@ -24,6 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 api/dist
-api/images
+# api/images
 
 .env
