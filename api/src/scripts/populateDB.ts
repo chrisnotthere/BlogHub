@@ -23,7 +23,6 @@ const delay = (ms: number) => {
 const createUsers = async () => {
   console.log("Creating users...");
   for (const user of users) {
-    console.log("Processing user:", user);
     try {
       await createUser(user);
     } catch (error) {
