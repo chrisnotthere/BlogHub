@@ -8,6 +8,8 @@ import { UserContextProvider } from "./context/UserContext";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+console.log('process.env.REACT_APP_PUBLIC_URL');
+console.log(process.env.REACT_APP_PUBLIC_URL);
 root.render(
   <React.StrictMode>
     <UserContextProvider>
