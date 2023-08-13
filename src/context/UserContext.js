@@ -9,17 +9,15 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        console.log('process.env.REACT_APP_HEROKU_URL: ')
-        console.log(process.env.REACT_APP_HEROKU_URL)
         const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}auth/user`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: 'include', 
         });
 
-        // if (!response.ok) {
-        //   throw new Error("Network response was not ok");
-        // }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
         const data = await response.json();
 
