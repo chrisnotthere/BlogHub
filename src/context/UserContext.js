@@ -9,6 +9,8 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        console.log('process.env.REACT_APP_HEROKU_URL: ')
+        console.log(process.env.REACT_APP_HEROKU_URL)
         const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}auth/user`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -21,7 +23,7 @@ export function UserContextProvider({ children }) {
 
         const data = await response.json();
 
-        // console.log('UserContext data: ', data)
+        console.log('UserContext data: ', data)
 
         setUserInfo({ 
           username: data.username,
