@@ -1,47 +1,46 @@
-# BlogHub
+# Getting Started with Create React App
 
-BlogHub is a full-featured blog Content Management System (CMS) that empowers users to post, edit, rate, and engage with various blog content. Built with TypeScript, React, Node/Express, and MySQL, this project showcases modern web development practices and design patterns.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
-  - **Authentication & Authorization:** Utilizes JSON Web Tokens (JWT) for secure user authentication and role-based authorization.
-  - **User Management:** Allows Registration, Login/Logout, and supports multiple roles, including member, writer, and admin, each with unique permissions.
-  - **Blog Management:** Enables users to Create, Read, Update, and Delete (CRUD) blog posts with ease.
-  - **Sort & Filter:** Offers the ability to filter blog posts by tags, and sort by date created.
-  - **Engagement:** Users can rate posts (up to 5 stars), create and delete comments, and like or unlike comments.
-  - **Pagination:** Implements pagination to navigate through blog posts.
+## Available Scripts
 
-## Project Structure
+In the project directory, you can run:
 
-```
-/BlogHub
-|-- /client
-|-- /api
-|-- docker-compose.yml
-|-- README.md
-```
+### `npm start`
 
-- The `/client` directory contains the React frontend of the application.
-- The `/api` directory contains the Node.js/Express backend of the application.
-- The `docker-compose.yml` file defines the services that make up the application.
-- The `README.md` file (this file) provides an overview of the project.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Services
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-BlogHub is made up of three main services:
+### `npm test`
 
-### 1. Client
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-The Client service runs the React frontend of the application. The frontend is responsible for presenting data to users and handling user interactions. It is built using TypeScript and communicates with the backend through HTTP requests.
+### `npm run build`
 
-### 2. API
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The API service runs the Node.js/Express server that acts as the backend of the application. The server processes client requests, interacts with the MySQL database, and sends responses back to the client. It is also built using TypeScript.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### 3. DB
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-The DB service runs the MySQL database where all the data related to the application is stored.
+### `npm run eject`
 
-## Getting Started
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-TODO: Create instructions for running the project via docker.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
