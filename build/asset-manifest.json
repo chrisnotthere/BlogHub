@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "https://chrisnotthere.github.io/static/css/main.9cf31457.css",
-    "main.js": "https://chrisnotthere.github.io/static/js/main.13652d10.js",
-    "index.html": "https://chrisnotthere.github.io/index.html",
-    "main.9cf31457.css.map": "https://chrisnotthere.github.io/static/css/main.9cf31457.css.map",
-    "main.13652d10.js.map": "https://chrisnotthere.github.io/static/js/main.13652d10.js.map"
+    "main.css": "https://chrisnotthere.github.io/BlogHub/static/css/main.9cf31457.css",
+    "main.js": "https://chrisnotthere.github.io/BlogHub/static/js/main.a50f22fe.js",
+    "index.html": "https://chrisnotthere.github.io/BlogHub/index.html",
+    "main.9cf31457.css.map": "https://chrisnotthere.github.io/BlogHub/static/css/main.9cf31457.css.map",
+    "main.a50f22fe.js.map": "https://chrisnotthere.github.io/BlogHub/static/js/main.a50f22fe.js.map"
   },
   "entrypoints": [
     "static/css/main.9cf31457.css",
-    "static/js/main.13652d10.js"
+    "static/js/main.a50f22fe.js"
   ]
 }
