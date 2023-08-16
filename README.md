@@ -4,7 +4,7 @@ BlogHub is a full-featured blog Content Management System (CMS) that empowers us
 
 [View the live project here](https://chrisnotthere.github.io/BlogHub)
 
-_Note: The API and Database are hosted on Heroku's free tier, which may cause them to go to sleep after a period of inactivity. If you experience a delay in loading, please refresh the page or wait a moment for the system to wake up._
+_Note: The API and Database are hosted on Heroku's free tier, which may cause them to go to sleep after a period of inactivity. If you experience a delay in loading (or "no posts to display"), please refresh the page or wait a moment for the system to wake up._
 
 ## Features
   - **Authentication & Authorization:** Utilizes JSON Web Tokens (JWT) for secure user authentication and role-based authorization.
