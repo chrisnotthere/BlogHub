@@ -55,7 +55,7 @@ const loginUserController = (req, res) => __awaiter(void 0, void 0, void 0, func
         const token = (0, auth_service_1.generateJwtToken)(user.id, secret);
         res.cookie("token", token, {
             httpOnly: true,
-            sameSite: "strict",
+            sameSite: "none",
             secure: true,
             maxAge: 3600000,
         });
@@ -75,7 +75,11 @@ exports.loginUserController = loginUserController;
 // Log out a user by clearing their JWT from the cookie
 const logoutUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.clearCookie("token");
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        });
         res.json({ message: "User logged out successfully." });
     }
     catch (error) {

@@ -9,7 +9,8 @@ const routes_1 = __importDefault(require("./routes"));
 const app = (0, express_1.default)();
 (0, middleware_1.applyMiddleware)(app);
 app.use(routes_1.default);
-const port = 5000;
+// Use Heroku's assigned port, or 5000 if running locally
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
