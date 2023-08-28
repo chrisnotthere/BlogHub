@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../assets/styles/filter-and-sort.module.css";
 import { TAGS } from "../../types/Post";
 
@@ -13,7 +13,6 @@ function FilterAndSort({
 }: FilterAndSortProps) {
   const [tags] = useState<string[]>(TAGS);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortContainerPosition, setSortContainerPosition] = useState<"top" | "center">("top");
 
   useEffect(() => {
     filterPostsByTags(selectedTags);
@@ -39,59 +38,39 @@ function FilterAndSort({
     sortPostsByDate(order);
   };
 
-  const sortContainerStyle =
-  sortContainerPosition === "top"
-  ? { top: "10vh" }
-  : { top: "40vh" };
+  const closeFilterAndSortMenu = () => {
+    const filterAndSortMenu = document.querySelector(
+      `.${styles.menuContainer}`
+    ) as HTMLDivElement;
+    filterAndSortMenu.style.display = "none";
+  };
 
   return (
-    <div
-      className={styles.menuContainer}
-      style={sortContainerStyle}
-    >
+    <div className={styles.menuContainer}>
       <div className={styles.tagContainer}>
         <div className={styles.tagContainerTop}>
           <p>Filter by</p>
-          <div className={styles.movementButtons}>
-            <button
-              className={styles.movementButton}
-              onClick={() => {setSortContainerPosition("top");}}
+          <button
+            className={styles.closeButton}
+            onClick={() => {
+              closeFilterAndSortMenu();
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </button>
-            <button
-              className={styles.movementButton}
-              onClick={() => {setSortContainerPosition("center");}}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </button>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
         </div>
         <div className={styles.tags}>
           {tags.map((tag) => (
