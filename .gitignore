@@ -26,5 +26,6 @@ yarn-error.log*
 # api/dist
 # api/images
 api/.env.local
+client/.env
 
 # .env
