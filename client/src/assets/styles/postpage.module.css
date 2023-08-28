@@ -1,9 +1,11 @@
+@import "./colors.css";
+
 .postPage {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .errorMessage {
@@ -30,6 +32,7 @@
 }
 
 .postTitle {
+  color: var(--teal1);
   text-align: center;
   font-size: 2.5rem;
   margin-top: 2rem;
@@ -72,26 +75,32 @@
 
 .postContent {
   margin-top: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 1.5;
   word-wrap: break-word;
+  padding: 1rem 0;
+}
+
+.postContent p,
+.postContent li {
+  margin-top: 0.5rem;
 }
 
 .tagsContainer {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
   margin-top: 1rem;
   border-top: 1px solid #ddd;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 
 .tag {
-  background-color: #d0e9e5;
-  padding: .5rem;
-  border-radius: .5rem;
-  font-size: .7rem;
+  background-color: var(--turquoise);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.7rem;
   color: #333;
 }
 
@@ -101,13 +110,13 @@
 }
 
 .commentOrRate {
-  background-color: #ececec;
+  background-color: var(--teal3);
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
   margin-top: 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   height: 220px;
 }
 
@@ -117,24 +126,20 @@
 
 .postRatingContainer {
   background-color: #f9f9f9;
-  border: 1px solid #d0e9e5;
-  font-size: .85rem;
+  border: 1px solid var(--turquoise);
+  font-size: 0.85rem;
   width: 12rem;
   height: 9rem;
-  padding: .5rem .25rem;
-  border-radius: .5rem;
+  padding: 0.5rem 0.25rem;
+  border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5rem;
-}
-
-.postAverageRating {
-
+  gap: 0.5rem;
 }
 
 .postRating {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   text-align: center;
   border-top: 1px solid #ccc;
 }
@@ -142,25 +147,74 @@
 .postRating button {
   height: 1.5rem;
   width: 80%;
-  font-size: .7rem;
-  border-radius: .25rem;
+  font-size: 0.7rem;
+  border-radius: 0.25rem;
   border: none;
   cursor: pointer;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
+  transition: background-color 0.3s ease;
 }
 
 .postRating button:hover {
-  background-color: #d0e9e5;
+  background-color: var(--teal2);
 }
 
 .postRatingStars {
   display: flex;
-  margin-top: .25rem;
-  padding-bottom: .5rem;
+  margin-top: 0.25rem;
+  padding-bottom: 0.5rem;
 }
 
 .postRatingStars svg {
   width: 28px;
   height: 28px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  .postPage {
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .postPage {
+    max-width: 500px;
+  }
+
+  .postTitle h2 {
+    font-size: 1.5rem;
+  }
+
+  .postAuthor {
+    font-size: 0.8rem;
+  }
+
+  .postContent {
+    font-size: 1rem;
+  }
+
+  .commentOrRate {
+    flex-direction: column-reverse;
+    height: auto;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .postPage {
+    max-width: 350px;
+  }
+
+  .postTitle h2 {
+    font-size: 1.25rem;
+  }
+
+  .postAuthor {
+    font-size: 0.75rem;
+  }
+
+  .postContent {
+    font-size: 0.8rem;
+  }
 }

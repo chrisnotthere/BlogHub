@@ -1,6 +1,7 @@
+@import './colors.css';
+
 .createCommentContainer{
   width: 90%;
-  /* padding: 1rem; */
 }
 
 .commentForm button {
@@ -10,12 +11,13 @@
   border: none;
   cursor: pointer;
   background-color: #fff;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
   font-weight: 600;
+  transition: background-color .3s ease;
 }
 
 .commentForm button:hover {
-  background-color: #d0e9e5;
+  background-color: var(--teal2);
 }
 
 .editorContainer {

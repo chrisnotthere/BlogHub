@@ -1,3 +1,5 @@
+@import './colors.css';
+
 .postContainer {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,7 @@
   padding: 2rem;
   box-sizing: border-box;
   border-radius: 0.25rem;
-  background-color: #f9f9f9;
+  background-color: var(--teal3);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -28,7 +30,7 @@
 }
 
 .postHead a {
-  color: blue;
+  color: var(--teal1);
 }
 
 .postCover {
@@ -122,14 +124,15 @@
 }
 
 .tag {
-  background-color: #d0e9e5;
+  background-color: var(--turquoise);
   padding: 0.5rem;
   border-radius: 0.5rem;
   font-size: 0.7rem;
+  transition: background-color 0.3s ease;
 }
 
 .tag:hover {
-  background-color: #b8e1dc;
+  background-color: var(--teal2);
   cursor: pointer;
 }
 
@@ -141,14 +144,14 @@
   margin: 0 auto;
   padding: 0.5rem 1rem;
   max-width: 400px;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--teal3);
   border-radius: 0.5rem;
   background-color: #fff;
 }
 
 .paginationContainer button {
   background: none;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -161,5 +164,26 @@
 }
 
 .paginationContainer button:hover:not(:disabled) {
-  background-color: #d0e9e5;
+  background-color: var(--teal3);
+}
+
+@media screen and (max-width: 800px) {
+
+  .postContainer {
+    width: 90%;
+  }
+
+  .postContent {
+    font-size: 0.8rem;
+  }
+
+  .paginationContainer {
+    max-width: 300px;
+    font-size: .75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .paginationContainer button {
+    padding: 0.25rem 0.5rem;
+  }
 }

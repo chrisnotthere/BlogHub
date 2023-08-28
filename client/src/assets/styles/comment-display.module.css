@@ -1,8 +1,10 @@
+@import './colors.css';
+
 .commentsContainer {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: .5rem;
-  background-color: #ececec;
+  background-color: var(--teal3);
 }
 
 .title {
@@ -14,7 +16,7 @@
 
 .commentContainer {
   padding: 1rem;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
   border-radius: .5rem;
   margin-bottom: 1rem;
   background-color: #fff;
@@ -30,7 +32,7 @@
 .commentHeader h3 {
   margin: 0;
   color: #333;
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 
 .commentHeader span {
@@ -59,39 +61,54 @@
   display: flex;
   align-items: center;
   gap: .5rem;
-  /* cursor: pointer; */
 }
 
 .likeIcon {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  /* fill: #333; */
-
 }
 
-.delete {
-
+.likeIcon:hover {
+  fill: var(--muted-red);
 }
 
 .deleteIcon {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  /* fill: #333; */
 }
 
 .deleteIcon:hover {
-  fill: #ff0000;
+  fill: var(--muted-red);
 }
 
 .noComments {
   color: #333;
   background-color: white;
   border-radius: .5rem;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
   text-align: center;
   margin-bottom: 1rem;
   padding: 1rem;
   line-height: 2;
+}
+
+@media screen and (max-width: 600px) {
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .commentHeader h3 {
+    font-size: 1rem;
+  }
+
+  .commentHeader span {
+    font-size: .7em;
+  }
+
+  .commentContent {
+    font-size: .9rem;
+  }
 }

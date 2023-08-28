@@ -1,3 +1,5 @@
+@import './colors.css';
+
 .menuContainer {
   display: flex;
   flex-direction: column;
@@ -17,16 +19,18 @@
 .closeButton {
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   border-radius: 50%;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
   background-color: #fff;
   width: 35px;
   height: 35px;
+  transition: background-color 0.3s ease-in;
 }
 
 .closeButton:hover {
-  background-color: rgb(255, 183, 183);
+  background-color: var(--muted-red);
 }
 
 .tagContainer,
@@ -53,24 +57,25 @@
 
 .tag {
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  background-color: #d0e9e5;
+  transition: all 0.2s ease;
+  background-color: var(--turquoise);
   padding: 0.5rem;
   border-radius: 0.75rem;
   font-size: 0.7rem;
   color: #333;
+  transition: background-color 0.3s ease;
 }
 
 .tag:hover {
-  background-color: #b8e1dc;
+  background-color: var(--teal2);
 }
 
 .selectedTag {
-  background-color: #98cdc6;
+  background-color: var(--teal2);
   color: #000;
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -80,6 +85,6 @@
   margin-top: 0.5rem;
   font-size: 0.7rem;
   border-radius: 0.25rem;
-  border: 1px solid #d0e9e5;
+  border: 1px solid var(--turquoise);
   background-color: #fff;
 }
