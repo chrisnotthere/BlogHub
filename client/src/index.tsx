@@ -11,8 +11,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <UserContextProvider>
-      <BrowserRouter>
-        <App />
+      <BrowserRouter basename='/BlogHub'>
+          <App />
       </BrowserRouter>
     </UserContextProvider>
   </React.StrictMode>
