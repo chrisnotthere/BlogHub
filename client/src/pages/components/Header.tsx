@@ -58,7 +58,7 @@ export default function Header() {
           {userInfo.isLoggedIn ? (
             <>
               <li className={styles.username}>
-                {userInfo.username} - {userInfo.role}
+                logged in as {userInfo.username} ({userInfo.role})
               </li>
             </>
           ) : (
