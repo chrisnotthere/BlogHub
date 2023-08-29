@@ -1,7 +1,12 @@
 @import './colors.css';
 
 .createCommentContainer{
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
   width: 90%;
+  color: var(--teal1);
+  /* background-color: red; */
 }
 
 .commentForm button {
@@ -10,14 +15,16 @@
   border-radius: .25rem;
   border: none;
   cursor: pointer;
+  color: var(--teal1);
   background-color: #fff;
-  border: 1px solid var(--turquoise);
+  border: 2px solid var(--teal1);
   font-weight: 600;
   transition: background-color .3s ease;
 }
 
 .commentForm button:hover {
-  background-color: var(--teal2);
+  color: #fff;
+  background-color: var(--teal1);
 }
 
 .editorContainer {
