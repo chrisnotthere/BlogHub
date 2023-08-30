@@ -8,11 +8,14 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}auth/logout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_HEROKU_URL}auth/logout`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
       setUserInfo({ username: "", isLoggedIn: false });
     } catch (error) {
       console.error("Network error:", error);
@@ -21,9 +24,10 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
-        <Link to="/">BlogHub</Link>
-      </div>
+      <Link className={styles.logo} to="/">
+        <span className={styles.logo1}>Blog</span>
+        <div className={styles.logo2}>Hub</div>
+      </Link>
       <nav className={styles.nav}>
         <ul className={styles.navTop}>
           <li>
