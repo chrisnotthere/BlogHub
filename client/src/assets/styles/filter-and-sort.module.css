@@ -1,4 +1,4 @@
-@import './colors.css';
+@import "./colors.css";
 
 .menuContainer {
   color: var(--neutral2);
@@ -88,4 +88,27 @@
   border-radius: 0.25rem;
   border: 1px solid var(--turquoise);
   background-color: #fff;
+}
+
+@media screen and (max-width: 600px) {
+  .menuContainer {
+    right: 1rem;
+    max-width: 150px;
+  }
+
+  .tagContainerTop {
+    font-size: 0.9rem;
+  }
+
+  .tag {
+    padding: 0.35rem;
+  }
+
+  .sortContainer {
+    font-size: 0.9rem;
+  }
+
+  .sortSelect {
+    padding: 0.25rem;
+  }
 }

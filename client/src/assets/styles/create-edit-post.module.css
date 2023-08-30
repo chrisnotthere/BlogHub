@@ -1,4 +1,4 @@
-@import './colors.css';
+@import "./colors.css";
 
 .createPost {
   margin: 2rem auto;
@@ -7,10 +7,9 @@
   border-radius: 5px;
   background-color: var(--teal3);
   box-shadow: 0 0 10px #ccc;
-  /* color: var(--teal1); */
 }
 
-.formContainer{
+.formContainer {
   background-color: #fff;
   padding: 2rem;
   border-radius: 0.25rem;
@@ -50,7 +49,8 @@
   font-size: 0.8rem;
 }
 
-.postForm button, .postForm input[type="file"] {
+.postForm button,
+.postForm input[type="file"] {
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   background-color: #fff;
@@ -61,14 +61,14 @@
   transition: all 0.2s ease;
 }
 
-.postForm button:hover, .postForm input[type="file"]:hover {
+.postForm button:hover,
+.postForm input[type="file"]:hover {
   background-color: var(--teal1);
   color: #fff;
 }
 
 .quillContainer {
   width: 100%;
-  /* height: 200px; */
   margin: 1rem 0;
   margin-bottom: 5rem;
 }
@@ -79,38 +79,70 @@
 }
 
 .currentImage {
-  margin-top: .5rem;
-  font-size: .8rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
 }
 
 .defaultContainer {
   display: flex;
   align-items: center;
-  gap: .25rem;
-  font-size: .8rem;
+  gap: 0.25rem;
+  font-size: 0.8rem;
 }
 
 .tagsContainer {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   align-items: center;
   margin-top: 1rem;
 }
 
 .imageErrorMessage {
   color: red;
-  font-size: .9rem;
+  font-size: 0.9rem;
   margin-top: 1rem;
 }
 
-.contentErrorMessage{
+.contentErrorMessage {
   color: red;
-  font-size: .9rem;
-  margin-bottom: .75rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
 }
 
 .postErrorMessage {
   color: red;
-  font-size: .9rem;
-  margin-bottom: .75rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+@media screen and (max-width: 800px) {
+  .createPost {
+    width: 90%;
+  }
+
+  .formContainer {
+    padding: 1rem;
+  }
+
+  .quillContainer {
+    width: 100%;
+  }
+
+  .quill {
+    width: 100%;
+  }
+
+  .defaultContainer span {
+    margin-bottom: 0.5rem;
+  }
+
+  .tagsContainer span {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .quillContainer {
+    margin-bottom: 7.5rem;
+  }
 }
