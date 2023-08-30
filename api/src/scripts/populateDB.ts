@@ -13,7 +13,7 @@ import { commentLikes } from "./populateCommentLikes";
 
 // Run this script with the following command:
 // cd api
-// ts-node src/scripts/populate.ts
+// ts-node src/scripts/populateDB.ts
 
 // Helper function to introduce delay
 const delay = (ms: number) => {

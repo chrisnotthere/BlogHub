@@ -73,4 +73,44 @@ export const commentLikes: CommentLike[] = [
     user_id: 8,
     comment_id: 9,
   },
+  {
+    user_id: 7,
+    comment_id: 10,
+  },
+  {
+    user_id: 8,
+    comment_id: 10,
+  },
+  {
+    user_id: 6,
+    comment_id: 11,
+  },
+  {
+    user_id: 7,
+    comment_id: 13,
+  },
+  {
+    user_id: 8,
+    comment_id: 13,
+  },
+  {
+    user_id: 7,
+    comment_id: 14,
+  },
+  {
+    user_id: 8,
+    comment_id: 15,
+  },
+  {
+    user_id: 6,
+    comment_id: 16,
+  },
+  {
+    user_id: 7,
+    comment_id: 16,
+  },
+  {
+    user_id: 8,
+    comment_id: 16,
+  },
 ];
