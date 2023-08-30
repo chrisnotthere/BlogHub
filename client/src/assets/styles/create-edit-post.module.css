@@ -1,10 +1,20 @@
+@import './colors.css';
+
 .createPost {
   margin: 2rem auto;
   width: 50%;
   padding: 4rem;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: var(--teal3);
   box-shadow: 0 0 10px #ccc;
+  /* color: var(--teal1); */
+}
+
+.formContainer{
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 form {
@@ -14,7 +24,46 @@ form {
 }
 
 form input {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+}
+
+.titleInput {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 2px solid var(--neutral4);
+}
+
+form label {
+  font-size: 1.2rem;
+  color: var(--teal1);
+}
+
+.imageSelect {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.imageSelect span {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.postForm button, .postForm input[type="file"] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  color: var(--teal1);
+  border: 2px solid var(--teal1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.postForm button:hover, .postForm input[type="file"]:hover {
+  background-color: var(--teal1);
+  color: #fff;
 }
 
 .quillContainer {

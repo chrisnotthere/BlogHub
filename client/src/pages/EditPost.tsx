@@ -125,6 +125,7 @@ function EditPost() {
             type="title"
             placeholder={"Title"}
             id="title"
+            className={styles.titleInput}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
