@@ -75,17 +75,32 @@ exports.ratings = [
     {
         post_id: 8,
         user_id: 3,
-        rating: 1,
+        rating: 4,
     },
     {
         post_id: 8,
         user_id: 4,
-        rating: 2,
+        rating: 5,
     },
     {
         post_id: 8,
         user_id: 4,
-        rating: 1,
+        rating: 3,
+    },
+    {
+        post_id: 9,
+        user_id: 3,
+        rating: 4,
+    },
+    {
+        post_id: 9,
+        user_id: 4,
+        rating: 4,
+    },
+    {
+        post_id: 9,
+        user_id: 4,
+        rating: 5,
     },
 ];
 //# sourceMappingURL=populateRatings.js.map

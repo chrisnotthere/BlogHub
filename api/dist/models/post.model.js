@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TAGS = void 0;
 exports.TAGS = [
-    'Technology',
     'Food',
+    'Recipes',
     'Health',
+    'DIY Crafts',
+    'Outdoors',
+    'Lifestyle',
     'Travel',
-    'Business',
-    'Entertainment',
-    'Education',
     'Miscellaneous'
 ];
 //# sourceMappingURL=post.model.js.map
