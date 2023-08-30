@@ -10,15 +10,18 @@ function EditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<FileList | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [labelText, setLabelText] = useState("No file chosen");
   const [existingImage, setExistingImage] = useState<string | null>(null);
   const [useDefaultImage, setUseDefaultImage] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [redirect, setRedirect] = useState(false);
+  const [imageError, setImageError] = useState("");
   const [contentError, setContentError] = useState("");
+  const [postError, setPostError] = useState("");
 
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
-  const fileInputRef = useRef(null);
 
   const options = TAGS.map((tag) => ({
     label: tag,
@@ -38,7 +41,9 @@ function EditPost() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.REACT_APP_HEROKU_URL}posts/post/${id}`);
+      const response = await fetch(
+        `${process.env.REACT_APP_HEROKU_URL}posts/post/${id}`
+      );
       if (response.ok) {
         const responseJson = await response.json();
         const data = responseJson.data;
@@ -60,6 +65,14 @@ function EditPost() {
 
     if (fileInputRef.current) {
       (fileInputRef.current as any).value = null;
+    }
+  };
+
+  const handleUpdateText = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const files = ev.target.files;
+    if (files) {
+      setImage(files);
+      setLabelText(`${files.length} file chosen`);
     }
   };
 
@@ -105,67 +118,88 @@ function EditPost() {
 
   return (
     <div className={styles.createPost}>
-      <form onSubmit={updatePost}>
-        <label htmlFor="title">Title</label>
-        <input
-          type="title"
-          placeholder={"Title"}
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <label htmlFor="image">Cover Image</label>
-
-        <p className={styles.currentImage}>
-          Current Cover Image: {existingImage || "Default Image"}
-        </p>
-
-        <input
-          ref={fileInputRef}
-          type="file"
-          onChange={(ev) => {
-            setImage(ev.target.files);
-            setUseDefaultImage(false);
-          }}
-          id="image"
-        />
-
-        <div className={styles.defaultContainer}>
-          <button type="button" onClick={handleUseDefaultImage}>
-            Use Default Image
-          </button>
-          <p>{useDefaultImage ? "Default image selected" : ""}</p>
-        </div>
-
-        <div className={styles.tagsContainer}>
-          <label htmlFor="tags">Tags</label>
-          <ReactSelect
-            id="tags"
-            name="tags"
-            isMulti
-            options={options}
-            styles={customStyles}
-            onChange={(selectedOptions) => {
-              const selectedTags = selectedOptions.map(
-                (option) => option.value
-              );
-              setTags(selectedTags);
-            }}
-            value={tags.map((tag) => ({ label: tag, value: tag }))}
+      <div className={styles.formContainer}>
+        <form className={styles.postForm} onSubmit={updatePost}>
+          <label htmlFor="title">Title</label>
+          <input
+            type="title"
+            placeholder={"Title"}
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
           />
-        </div>
 
-        <div className={styles.quillContainer}>
-          <Editor value={content} onChange={setContent} />
-        </div>
+          <label htmlFor="image">Cover Image</label>
+          <div className={styles.imageSelect}>
+            <div className="custom-file-upload">
+              <button
+                type="button"
+                onClick={() => {
+                  if (fileInputRef.current !== null) {
+                    fileInputRef.current.click();
+                  }
+                }}
+              >
+                Upload File
+              </button>
+              <span>{labelText}</span>
+              <input
+                ref={fileInputRef}
+                type="file"
+                style={{ display: "none" }}
+                onChange={(ev) => {
+                  setImage(ev.target.files);
+                  setUseDefaultImage(false);
+                  setImageError("");
+                  handleUpdateText(ev);
+                }}
+                id="image"
+              />
+            </div>
 
-        {contentError && (
-          <p className={styles.contentErrorMessage}>{contentError}</p>
-        )}
+            <div className={styles.defaultContainer}>
+              <button type="button" onClick={handleUseDefaultImage}>
+                Use Default Image
+              </button>
 
-        <button>Update post</button>
-      </form>
+              <p>{useDefaultImage ? "Default image selected" : ""}</p>
+            </div>
+
+            {imageError && (
+              <p className={styles.imageErrorMessage}>{imageError}</p>
+            )}
+          </div>
+
+          <div className={styles.tagsContainer}>
+            <label htmlFor="tags">Tags</label>
+            <ReactSelect
+              id="tags"
+              name="tags"
+              isMulti
+              options={options}
+              styles={customStyles}
+              onChange={(selectedOptions) => {
+                const selectedTags = selectedOptions.map(
+                  (option) => option.value
+                );
+                setTags(selectedTags);
+              }}
+              value={tags.map((tag) => ({ label: tag, value: tag }))}
+            />
+          </div>
+
+          <div className={styles.quillContainer}>
+            <Editor value={content} onChange={setContent} />
+          </div>
+
+          {contentError && (
+            <p className={styles.contentErrorMessage}>{contentError}</p>
+          )}
+
+          <button>Update post</button>
+        </form>
+      </div>
     </div>
   );
 }
