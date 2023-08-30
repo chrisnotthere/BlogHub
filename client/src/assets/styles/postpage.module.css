@@ -87,7 +87,9 @@
 }
 
 .postContent p,
-.postContent li {
+.postContent li,
+.postContent h1,
+.postContent h2 {
   margin-top: 0.5rem;
 }
 
