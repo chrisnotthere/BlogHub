@@ -10,12 +10,12 @@ export interface Post {
 }
 
 export const TAGS = [
-  'Technology',
   'Food',
+  'Recipes',
   'Health',
+  'DIY Crafts',
+  'Outdoors',
+  'Lifestyle',
   'Travel',
-  'Business',
-  'Entertainment',
-  'Education',
   'Miscellaneous'
 ];
