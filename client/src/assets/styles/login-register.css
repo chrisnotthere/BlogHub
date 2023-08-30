@@ -1,4 +1,4 @@
-@import './colors.css';
+@import "./colors.css";
 
 .form-container {
   display: flex;
@@ -29,46 +29,73 @@
 }
 
 .auth-form input {
-  margin: .5rem 0 1rem 0;
+  margin: 0.5rem 0 1rem 0;
   height: 2rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: none;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.auth-form input:hover,
+.auth-form input:focus {
+  background-color: var(--light-turquoise);
 }
 
 .auth-form button {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   height: 2rem;
   width: 100%;
   font-size: 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-form button:hover {
+  background-color: var(--dark-teal);
+  color: var(--light-turquoise);
 }
 
 .register {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
-  font-size: .8rem;
+  gap: 0.5rem;
+  font-size: 0.8rem;
   margin-top: 1rem;
   text-align: center;
 }
 
+.register a {
+  color: var(--dark-teal);
+  font-weight: 600;
+}
+
+.register a:hover {
+  color: var(--teal1);
+  text-decoration: underline;
+}
+
 .role-select {
   width: 193px;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .role-select select {
-  border-radius: .25rem;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+}
+
+.role-select select:hover {
+  cursor: pointer;
 }
 
 .role-t {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .role-description {
@@ -76,7 +103,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-size: .8rem;
+  font-size: 0.8rem;
   line-height: 1.2;
   color: #4a4a4a;
   text-align: center;
@@ -103,13 +130,19 @@
 }
 
 .guest-login button {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   height: 2rem;
   width: 100%;
   font-size: 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.guest-login button:hover {
+  background-color: var(--dark-teal);
+  color: var(--light-turquoise);
 }
 
 .hidden {
