@@ -8,6 +8,14 @@ const promise_1 = __importDefault(require("mysql2/promise"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const url_1 = require("url");
 dotenv_1.default.config({ path: ".env.local" });
+// docker db
+if (process.env.DOCKER_DB) {
+    process.env.DB_HOST = "db";
+    process.env.DB_USER = "root";
+    process.env.DB_PASSWORD = "password";
+    process.env.DB_NAME = "blogdb";
+}
+// production db
 if (process.env.JAWSDB_URL) {
     const jawsDBUrl = new url_1.URL(process.env.JAWSDB_URL);
     process.env.DB_HOST = jawsDBUrl.hostname;
@@ -15,6 +23,7 @@ if (process.env.JAWSDB_URL) {
     process.env.DB_PASSWORD = jawsDBUrl.password;
     process.env.DB_NAME = jawsDBUrl.pathname.substring(1);
 }
+// local db
 exports.db = promise_1.default.createPool({
     host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "root",
