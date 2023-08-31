@@ -1,0 +1,32 @@
+version: '3'
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    env_file:
+      - .env.docker
+    ports:
+      - "3000:80"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://root:password@db:3306/blogdb
+      - DOCKER_DB=true
+    ports:
+      - "5000:5000"
+
+  db:
+    image: mysql:8.0.34
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=blogdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./api/src/scripts:/docker-entrypoint-initdb.d
