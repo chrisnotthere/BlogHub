@@ -5,7 +5,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     env_file:
-      - .env.docker
+      - ./client/.env.docker
     ports:
       - "3000:80"
 

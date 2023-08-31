@@ -1,32 +1,36 @@
 FROM node:18.16.0 AS build
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install TypeScript globally
 RUN npm install -g typescript
-COPY package*.json ./
+
+# Copy package manifests and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
+
+# Copy the wait-for-mysql script and make it executable
+COPY wait-for-mysql.sh /app/wait-for-mysql.sh
+RUN chmod +x /app/wait-for-mysql.sh
+
+# Copy source files and tsconfig, then compile
 COPY ./src ./src
 COPY tsconfig.json ./
-
-# Compile TypeScript to JavaScript
 RUN tsc
 
-# Copy the wait-for-mysql script
-COPY wait-for-mysql.sh /wait-for-mysql.sh
-RUN chmod +x /wait-for-mysql.sh
-
+# Runtime stage
 FROM node:18.16.0 AS runtime
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy over compiled JavaScript and dependencies from build image
-COPY --from=build /usr/src/app/dist ./dist
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/wait-for-mysql.sh ./wait-for-mysql.sh
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/wait-for-mysql.sh ./wait-for-mysql.sh
 
+# Expose the required port
 EXPOSE 5000
 
 # Run the wait-for-mysql script before starting the application

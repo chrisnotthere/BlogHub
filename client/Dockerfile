@@ -1,9 +1,9 @@
 # Step 1: Build the React application
 FROM node:18.16.0 AS build
 WORKDIR /app
-COPY client/package.json client/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
-COPY client/ ./
+COPY ./ ./
 RUN npm run build
 
 # Step 2: Serve the React application
