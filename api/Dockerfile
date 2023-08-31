@@ -3,6 +3,9 @@ FROM node:18.16.0 AS build
 # Set the working directory
 WORKDIR /app
 
+# Update package list and install MySQL client
+RUN apt-get update && apt-get install default-mysql-client -y
+
 # Install TypeScript globally
 RUN npm install -g typescript
 
@@ -34,4 +37,7 @@ COPY --from=build /app/wait-for-mysql.sh ./wait-for-mysql.sh
 EXPOSE 5000
 
 # Run the wait-for-mysql script before starting the application
-CMD ["/bin/sh", "./wait-for-mysql.sh", "db:3306", "--", "node", "./dist/index.js"]
+# CMD ["/bin/sh", "./wait-for-mysql.sh", "db:3306", "--", "node", "./dist/index.js"]
+
+# Directly start the application without waiting for MySQL
+CMD ["node", "./dist/index.js"]
