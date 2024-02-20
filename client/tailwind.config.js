@@ -4,6 +4,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    screens: {
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+    },
     extend: {
       colors: {
         'light-turquoise': '#f4fffd',
@@ -24,6 +30,12 @@ module.exports = {
         'neutral2': '#333333',
         'neutral3': '#666666',
         'neutral4': '#d2d2d2',
+        // new colors
+        'deep-sea': '#22577A',
+        'bright-teal': '#38A3A5',
+        'mint-green': '#57CC99',
+        'spring-green': '#80ED99',
+        'soft-mint': '#C7F9CC',
       },
     },
   },
