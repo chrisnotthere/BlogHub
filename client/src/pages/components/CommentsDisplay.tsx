@@ -110,7 +110,7 @@ export default function CommentsDisplay({
             <div key={comment.id} className={styles.commentContainer}>
               <div className={styles.commentHeader}>
                 <h3>{comment.author}</h3>
-                <span>{formatDate(comment.created_at)}</span>
+                {/* <span>{formatDate(comment.created_at)}</span> */}
               </div>
               <div
                 className={styles.commentContent}
