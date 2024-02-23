@@ -41,7 +41,7 @@ export default function Header() {
         {/* Logo - Left */}
         <div className="flex justify-center items-center">
           <Link
-            className="p-1 rounded-full bg-transparent transition duration-300 ease-in-out hover:bg-spring-green/50"
+            className="p-1 rounded bg-transparent transition duration-300 ease-in-out"
             to="/"
           >
             <img
