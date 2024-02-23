@@ -50,45 +50,100 @@ function RegisterPage() {
   if (redirect) return <Navigate to="/login" />;
 
   return (
-    <div className="form-container">
-      <h1>REGISTER</h1>
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <label className="hidden" htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          minLength={3}
-        />
-        <label className="hidden" htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength={6}
-        />
-        <div className="role-select">
-          <div className="role-t">
-            <label htmlFor="role">Role:</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value as Role)}
-            >
-              <option value="admin">Admin</option>
-              <option value="writer">Writer</option>
-              <option value="member">Member</option>
-            </select>
+
+    <>
+
+      {/* <div className="form-container">
+        <h1>REGISTER</h1>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label className="hidden" htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            minLength={3}
+          />
+          <label className="hidden" htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+          />
+          <div className="role-select">
+            <div className="role-t">
+              <label htmlFor="role">Role:</label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value as Role)}
+              >
+                <option value="admin">Admin</option>
+                <option value="writer">Writer</option>
+                <option value="member">Member</option>
+              </select>
+            </div>
+            <p className="role-description">{roleDescriptions[role]}</p>
           </div>
-          <p className="role-description">{roleDescriptions[role]}</p>
+          <button type="submit">Register</button>
+        </form>
+        {error && <p className="error">{error}</p>}
+      </div> */}
+
+      <div className="flex flex-col text-center">
+        <div className="flex flex-col items-center justify-center bg-mint-green max-w-xs rounded-lg my-4 mx-auto py-2 px-0 shadow-2xl sm:max-w-lg md:max-w-xl sm:p-8 md:p-12">
+          <h1 className="text-xl bg-mint-green md:text-3xl">REGISTER</h1>
+          <form className="flex flex-col items-center w-full p-4" onSubmit={handleSubmit}>
+            <label className="hidden" htmlFor="username">Username:</label>
+            <input
+              className="my-2 h-8 rounded border-none p-2"
+              type="text"
+              id="username"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              minLength={3}
+              required
+            />
+            <label className="hidden" htmlFor="password">Password:</label>
+            <input
+              className="my-2 h-8 rounded-md border-none p-2"
+              type="password"
+              id="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              minLength={6}
+              required
+            />
+            <div className="role-select w-full flex flex-col items-center justify-center mt-4">
+              <div className="role-t flex items-center justify-around w-full px-2">
+                <label className="mr-2" htmlFor="role">Role:</label>
+                <select
+                  className="border-none rounded p-2 bg-soft-mint"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value as Role)}
+                >
+                  <option value="admin">Admin</option>
+                  <option value="writer">Writer</option>
+                  <option value="member">Member</option>
+                </select>
+              </div>
+              <p className="role-description text-sm mt-2 max-w-60">{roleDescriptions[role]}</p>
+            </div>
+            <button className="mt-2 h-8 w-full text-lg rounded border-none cursor-pointer transition duration-300 ease-in-out bg-spring-green hover:bg-spring-green/60 hover:text-light-turquoise" 
+              type="submit">
+              Register
+            </button>
+          </form>
+          {error && <p className=" text-red-600">{error}</p>}
         </div>
-        <button type="submit">Register</button>
-      </form>
-      {error && <p className="error">{error}</p>}
-    </div>
+      </div>
+    </>
+
   );
 }
 

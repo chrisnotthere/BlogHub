@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import "../assets/styles/login-register.css";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
@@ -55,12 +54,14 @@ function LoginPage() {
   if (redirect) return <Navigate to="/" />;
 
   return (
-    <div className="login-container">
-      <div className="form-container">
-        <h1>LOG IN</h1>
-        <form className="auth-form" onSubmit={handleFormSubmit}>
+    <div className="flex flex-col text-center ">
+      {/* Top */}
+      <div className="flex flex-col items-center justify-center bg-mint-green max-w-xs rounded-lg my-4 mx-auto py-2 px-0 shadow-2xl sm:max-w-lg md:max-w-xl sm:p-8 md:p-12">
+        <h1 className="text-xl md:text-3xl">LOGIN</h1>
+        <form className="flex flex-col items-center w-full p-4" onSubmit={handleFormSubmit}>
           <label className="hidden" htmlFor="username">Username</label>
           <input
+            className="my-2 h-8 rounded border-none p-2"
             type="text"
             id="username"
             placeholder="Username"
@@ -71,6 +72,7 @@ function LoginPage() {
           />
           <label className="hidden" htmlFor="password">Password</label>
           <input
+            className="my-2 h-8 rounded-md border-none p-2"
             type="password"
             id="password"
             placeholder="Password"
@@ -79,24 +81,29 @@ function LoginPage() {
             minLength={6}
             required
           />
-          <button type="submit">Login</button>
-          <div className="register">
+          <button className="mt-2 h-8 w-full text-lg rounded border-none cursor-pointer transition duration-300 ease-in-out bg-spring-green hover:bg-spring-green/60 hover:text-light-turquoise" 
+            type="submit">
+            Login
+          </button>
+          <div className="flex flex-col gap-2 text-sm mt-4 text-center">
             <span>Don't have an account?</span>
-            <Link to={"/register"}>Register</Link>
+            <Link className="text-deep-sea font-semibold hover:text-teal3 hover:underline" to={"/register"}>Register</Link>
           </div>
         </form>
-        {error && <p className="error">{error}</p>}
+        {error && <p className="">{error}</p>}
       </div>
-      <div className="guest-login">
-        <button onClick={loginAsGuest} aria-label="Sign in as Guest">
+      {/* Bottom */}
+      <div className="flex flex-col bg-mint-green rounded-lg my-8 mx-auto p-5 shadow-2xl w-60 ">
+        <button className="flex items-center justify-center mt-2 h-8 p-4 w-full text-lg rounded border-none cursor-pointer transition duration-300 ease-in-out bg-spring-green hover:bg-spring-green/60 hover:text-light-turquoise" onClick={loginAsGuest} aria-label="Sign in as Guest">
           Sign in as Guest
         </button>
-        <button onClick={loginAsAdmin} aria-label="Sign in as Admin">
+        <button className="flex items-center justify-center mt-2 h-8 p-4 w-full text-lg rounded border-none cursor-pointer transition duration-300 ease-in-out bg-spring-green hover:bg-spring-green/60 hover:text-light-turquoise" onClick={loginAsAdmin} aria-label="Sign in as Admin">
           Sign in as Admin
         </button>
       </div>
     </div>
   );
+
 }
 
 export default LoginPage;
