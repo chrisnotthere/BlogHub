@@ -14,7 +14,7 @@
   background-color: var(--light-rose);
   position: fixed;
   right: 2rem;
-  z-index: 100;
+  z-index: 9;
 }
 
 .closeButton {
