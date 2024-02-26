@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { Post } from "../types/Post";
-import styles from "../assets/styles/indexpage.module.css";
 import { PostComponent } from "./components/Post";
 import FilterAndSort from "./components/FilterAndSort";
 import Pagination from "./components/Pagination";
@@ -113,27 +112,27 @@ function IndexPage() {
   }
 
   return (
-    <div className={styles.indexContainer}>
-      <div className={styles.sortContainer}>
+    <div className="...">
+      <div className="...">
         <FilterAndSort
           filterPostsByTags={filterPostsByTags}
           sortPostsByDate={sortPostsByDate}
         />
       </div>
-      <div className={styles.postContainer}>
+      <div className="flex flex-col gap-4 my-12 sm:my-16 md:my-20 lg:my-28 mx-auto p-0 sm:p-2 md:p-8 box-border rounded-lg bg-soft-mint shadow-2xl w-full max-w-md md:max-w-xl lg:max-w-4xl">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           setCurrentPage={setCurrentPage}
         />
-
+  
         {currentPosts.length === 0 ? (
-          <div>
-            <h2>No Posts to display</h2>
-            <p>Be the first to create a post!</p>
+          <div className='text-center p-4'>
+            <h2 className="text-base md:text-lg lg:text-2xl mb-8">No Posts to display</h2>
+            {/* <p className="text-sm md:text-base lg:text-lg">Please wait for the server to wake up</p> */}
           </div>
         ) : (
-          [...currentPosts].map((post: Post) => (
+          [...currentPosts].map((post) => (
             <PostComponent
               key={post.id}
               post={post}
@@ -141,7 +140,7 @@ function IndexPage() {
             />
           ))
         )}
-
+  
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

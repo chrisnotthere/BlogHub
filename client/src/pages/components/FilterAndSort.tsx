@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "../../assets/styles/filter-and-sort.module.css";
 import { TAGS } from "../../types/Post";
 
 interface FilterAndSortProps {
@@ -11,6 +10,7 @@ function FilterAndSort({
   filterPostsByTags,
   sortPostsByDate,
 }: FilterAndSortProps) {
+  const [isMenuVisible, setIsMenuVisible] = useState(true);
   const [tags] = useState<string[]>(TAGS);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -39,22 +39,19 @@ function FilterAndSort({
   };
 
   const closeFilterAndSortMenu = () => {
-    const filterAndSortMenu = document.querySelector(
-      `.${styles.menuContainer}`
-    ) as HTMLDivElement;
-    filterAndSortMenu.style.display = "none";
+    setIsMenuVisible(false);
   };
 
-  return (
-    <div className={styles.menuContainer}>
-      <div className={styles.tagContainer}>
-        <div className={styles.tagContainerTop}>
+  return isMenuVisible? (
+    <div className="hidden sm:flex flex-col max-w-[190px] p-4 rounded shadow-md bg-soft-mint border-2 border-bright-teal fixed top-20 right-8 z-10">
+      <div className="flex flex-col">
+        <div className="flex justify-between items-center w-full">
           <p>Filter by</p>
           <button
-            className={styles.closeButton}
             onClick={() => {
               closeFilterAndSortMenu();
             }}
+            className="flex items-center justify-center cursor-pointer rounded-full border border-bright-teal bg-white w-9 h-9 transition-colors duration-300 ease-in hover:bg-red-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,12 +69,12 @@ function FilterAndSort({
             </svg>
           </button>
         </div>
-        <div className={styles.tags}>
+        <div className="flex flex-wrap gap-2 mb-2">
           {tags.map((tag) => (
             <div
               key={tag}
-              className={`${styles.tag} ${
-                selectedTags.includes(tag) ? styles.selectedTag : ""
+              className={`cursor-pointer transition-all duration-200 ease-linear bg-lavender p-2 rounded text-xs text-gray-800 ${
+                selectedTags.includes(tag) ? "bg-mint-green text-white shadow-md" : ""
               }`}
               onClick={() => toggleTagSelection(tag)}
             >
@@ -86,16 +83,20 @@ function FilterAndSort({
           ))}
         </div>
       </div>
-
-      <div className={styles.sortContainer}>
+  
+      <div className="flex flex-col items-start">
         <p>Sort by</p>
-        <select className={styles.sortSelect} onChange={handleSortChange}>
+        <select
+          onChange={handleSortChange}
+          className="cursor-pointer p-2 mt-2 text-xs rounded border border-bright-teal bg-white"
+        >
           <option value="desc">Date (newest first)</option>
           <option value="asc">Date (oldest first)</option>
         </select>
       </div>
     </div>
-  );
+  ) : null;
+
 }
 
 export default FilterAndSort;
