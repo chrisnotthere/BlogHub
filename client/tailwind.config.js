@@ -23,7 +23,7 @@ module.exports = {
         'light-rose': '#fff9fd',
         'rose': '#FADBEF',
         'dark-rose': '#F9A7D1',
-        'lavender': '#e8bfda',
+        'lavender': '#f7d2eb',
         'dark-lavender': '#d2a8c7',
         'muted-red': '#fcc0c0',
         'muted-red2': '#faa6a6',

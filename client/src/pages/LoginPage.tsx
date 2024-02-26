@@ -54,7 +54,7 @@ function LoginPage() {
   if (redirect) return <Navigate to="/" />;
 
   return (
-    <div className="flex flex-col text-center ">
+    <div className="flex flex-col text-center mt-20">
       {/* Top */}
       <div className="flex flex-col items-center justify-center bg-mint-green max-w-xs rounded-lg my-4 mx-auto py-2 px-0 shadow-2xl sm:max-w-lg md:max-w-xl sm:p-8 md:p-12">
         <h1 className="text-xl md:text-3xl">LOGIN</h1>

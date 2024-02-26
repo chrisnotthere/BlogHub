@@ -49,7 +49,7 @@ function RegisterPage() {
   if (redirect) return <Navigate to="/login" />;
 
   return (
-    <div className="flex flex-col text-center">
+    <div className="flex flex-col text-center mt-20">
       <div className="flex flex-col items-center justify-center bg-mint-green max-w-xs rounded-lg my-4 mx-auto py-2 px-0 shadow-2xl sm:max-w-lg md:max-w-xl sm:p-8 md:p-12">
         <h1 className="text-xl bg-mint-green md:text-3xl">REGISTER</h1>
         <form className="flex flex-col items-center w-full p-4" onSubmit={handleSubmit}>
