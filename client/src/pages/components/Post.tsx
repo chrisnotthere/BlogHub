@@ -1,9 +1,8 @@
 import { Post } from "../../types/Post";
 import { Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import styles from "../../assets/styles/indexpage.module.css";
 
 interface PostComponentProps {
   post: Post;
@@ -16,7 +15,6 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
   const [numberOfComments, setNumberOfComments] = useState<number | null>(null);
   const [tags, setTags] = useState<string[]>([]);
   const { userInfo } = useContext(UserContext);
-  const contentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   // check if user is admin or author of post
@@ -75,32 +73,22 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
     if (post.tags) setTags(post.tags.split(","));
   }, []);
 
-  // fade content text if too long
-  useEffect(() => {
-    const rootFontSize = parseFloat(
-      getComputedStyle(document.documentElement).fontSize
-    );
-    const threshold = 3 * rootFontSize;
-
-    if (contentRef.current && contentRef.current.offsetHeight > threshold) {
-      contentRef.current.classList.add(styles.faded);
-    }
-  }, [post.content]);
-
   return (
-    <div className={styles.post}>
+    <div className="flex flex-col gap-4 p-4 rounded bg-white shadow">
       <Link to={`/post/${post.id}`}>
         <img
           alt={post.title}
-          className={styles.postCover}
+          className="w-full max-h-52 object-cover rounded-lg transition-opacity duration-300 ease-in-out hover:opacity-70"
           src={process.env.REACT_APP_HEROKU_URL + (post.image || "images/default.webp")}
         />
       </Link>
-      <div className={styles.postHead}>
-        <Link to={`/post/${post.id}`}>
-          <h2>{post.title}</h2>
+      <div className="flex flex-col justify-between items-center">
+        {/* post title */}
+        <Link to={`/post/${post.id}`} className="text-deep-sea hover:underline hover:opacity-70">
+          <h2 className="text-xl text-center">{post.title}</h2>
         </Link>
-        <div className={styles.icons}>
+        <div className="flex gap-4 align justify-end w-full">
+          {/* Edit Icon */}
           <svg
             onClick={() => handleEdit(post.id)}
             xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +96,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={styles.editIcon}
+            className="w-6 h-6 cursor-pointer hover:text-blue-700"
           >
             <path
               strokeLinecap="round"
@@ -116,6 +104,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
               d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
             />
           </svg>
+          {/* Delete Icon */}
           <svg
             onClick={() => handlePostDelete(post.id)}
             xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +112,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={styles.deleteIcon}
+            className="w-6 h-6 cursor-pointer hover:text-red-600"
           >
             <path
               strokeLinecap="round"
@@ -134,43 +123,44 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
         </div>
       </div>
 
-      <div className={styles.postContent}>
-        <div
-          className={styles.content}
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(post.content),
-          }}
-          ref={contentRef}
-        />
-      </div>
+      {/* post content */}
+      <Link to={`/post/${post.id}`} >
+        <div className="flex justify-between cursor-pointer -mt-2">
+          <div
+            className="post-content w-full break-words overflow-hidden relative max-h-18 line-clamp-3 text-neutral2 "
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(post.content),
+            }}
+          />
+        </div>
+      </Link>
 
+      {/* post tags */}
       {tags.length > 0 && (
-        <div className={styles.tagsContainer}>
+        <div className="flex items-center flex-wrap gap-2">
           {tags.map((tag) => (
-            <div className={styles.tag} key={tag}>
+            <div key={tag} className="bg-lavender p-2 rounded text-sm transition-colors duration-300 ease-in-out hover:bg-lavender-500">
               {tag}
             </div>
           ))}
         </div>
       )}
 
-      <div className={styles.postFoot}>
-        <p className={styles.author}>By {post.author}</p>
-        <div className={styles.rating}>
+      {/* post author */}
+      <div className="flex justify-between items-center">
+        <p className="text-gray-600 text-sm">By {post.author}</p>
+        <div className="text-right text-sm">
           <p>
             {numberOfRatings === 0
               ? "0 Reviews"
-              : `${numberOfRatings} ${
-                  numberOfRatings === 1 ? "Review" : "Reviews"
-                } - ${avgRating ? avgRating.toFixed(1) : "N/A"} Average`}
+              : `${numberOfRatings} ${numberOfRatings === 1 ? "Review" : "Reviews"} - ${avgRating ? avgRating.toFixed(1) : "N/A"} Average`}
           </p>
-          <p>
+          {/* comments */}
+          <p className="text-teal-500 hover:underline">
             <Link to={`/post/${post.id}#comments`}>
               {numberOfComments === 0
                 ? "0 Comments"
-                : `${numberOfComments} ${
-                    numberOfComments === 1 ? "Comment" : "Comments"
-                  }`}
+                : `${numberOfComments} ${numberOfComments === 1 ? "Comment" : "Comments"}`}
             </Link>
           </p>
         </div>
