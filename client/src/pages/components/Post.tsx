@@ -87,7 +87,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
         <Link to={`/post/${post.id}`} className="text-deep-sea hover:underline hover:opacity-70">
           <h2 className="text-xl text-center">{post.title}</h2>
         </Link>
-        <div className="flex gap-4 align justify-end w-full">
+        <div className="flex gap-4 align justify-end w-full mt-1">
           {/* Edit Icon */}
           <svg
             onClick={() => handleEdit(post.id)}
@@ -96,7 +96,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 cursor-pointer hover:text-blue-700"
+            className="w-6 h-6 cursor-pointer text-blue-700 hover:text-blue-400"
           >
             <path
               strokeLinecap="round"
@@ -112,7 +112,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 cursor-pointer hover:text-red-600"
+            className="w-6 h-6 cursor-pointer text-red-500 hover:text-red-300"
           >
             <path
               strokeLinecap="round"
@@ -127,7 +127,7 @@ export function PostComponent({ post, handleDelete }: PostComponentProps) {
       <Link to={`/post/${post.id}`} >
         <div className="flex justify-between cursor-pointer -mt-2">
           <div
-            className="post-content w-full break-words overflow-hidden relative max-h-18 line-clamp-3 text-neutral2 "
+            className="post-content-index w-full break-words overflow-hidden relative max-h-18 line-clamp-3 text-neutral2 "
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(post.content),
             }}

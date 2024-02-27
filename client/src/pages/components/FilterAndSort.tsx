@@ -73,7 +73,7 @@ function FilterAndSort({
           {tags.map((tag) => (
             <div
               key={tag}
-              className={`cursor-pointer transition-all duration-200 ease-linear bg-lavender p-2 rounded text-xs text-gray-800 ${
+              className={`cursor-pointer transition-all duration-200 ease-linear bg-lavender hover:bg-opacity-20 p-2 rounded text-xs text-gray-800 ${
                 selectedTags.includes(tag) ? "bg-mint-green text-white shadow-md" : ""
               }`}
               onClick={() => toggleTagSelection(tag)}
