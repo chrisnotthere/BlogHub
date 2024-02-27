@@ -1,7 +1,5 @@
 import ReactQuill from "react-quill";
-import styles from "../../assets/styles/comment.module.css";
 import { useState } from "react";
-import { Comment } from "../../types/Comment";
 
 interface CommentComponentProps {
   id: string | undefined;
@@ -80,19 +78,21 @@ export default function CommentEditor({
   }
 
   return (
-    <div className={styles.createCommentContainer}>
-      <form className={styles.commentForm} onSubmit={createComment}>
-        <h3>Post a comment</h3>
-        <div className={styles.editorContainer}>
+    <div className="w-full">
+      <form className="flex flex-col h-80" onSubmit={createComment}>
+        <h3 className="text-deep-sea text-center text-xl mt-4">Post a comment</h3>
+        <div className="my-4 max-w-full">
           <ReactQuill
-            className={styles.commentEditor}
+            className="w-full h-40 p-2 bg-white rounded-md"
             value={commentValue}
-            theme={"snow"}
+            theme="snow"
             onChange={onEditorChange}
             modules={modules}
           />
         </div>
-        <button type="submit">Comment</button>
+        <button type="submit" className="w-24 h-10 mt-10 bg-white text-bright-teal rounded border-2 border-bright-teal font-semibold hover:bg-bright-teal hover:text-white transition-colors duration-300 ease-in-out mx-auto">
+          Comment
+        </button>
       </form>
     </div>
   );

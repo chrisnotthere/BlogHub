@@ -17,8 +17,8 @@ body::-webkit-scrollbar-thumb {
   border: 1px solid rgb(124, 124, 124);
 }
 
-/* post content fade effect */
-.post-content::after {
+/* post content fade effect (index page) */
+.post-content-index::after {
   content: "";
   text-align: right;
   position: absolute;
@@ -31,4 +31,12 @@ body::-webkit-scrollbar-thumb {
     rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 1) 100%
   );
+}
+
+/* post content spacing (post page) */
+.post-content p,
+.post-content li,
+.post-content h1,
+.post-content h2 {
+  margin-top: 0.5rem;
 }

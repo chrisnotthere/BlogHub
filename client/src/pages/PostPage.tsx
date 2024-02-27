@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Post } from "../types/Post";
 import DOMPurify from "dompurify";
-import styles from "../assets/styles/postpage.module.css";
 import { UserContext } from "../context/UserContext";
 import RatingComponent from "./components/Rating";
 import CommentEditor from "./components/CommentEditor";
@@ -159,27 +158,28 @@ function PostPage() {
   };
 
   if (!post) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div className="text-center mt-8">Loading...</div>;
   }
 
   if (redirect) return <Navigate to="/" />;
 
   return (
-    <div className={styles.postPage}>
-      <div className={styles.postImage}>
+    <div className="mx-auto mt-12 sm:mt-20 md:mt-28 mb-10 p-2 sm:p-8 shadow-2xl rounded-lg bg-soft-mint max-w-md md:max-w-xl lg:max-w-4xl">
+      <div className="w-full flex justify-center">
         <img
           alt={post.title}
-          className={styles.postCover}
+          className="w-full object-cover rounded-lg"
           src={process.env.REACT_APP_HEROKU_URL + (post.image || "images/default.webp")}
         />
       </div>
-      <div className={styles.postTitle}>
+      <div className="text-deep-sea text-center text-xl md:text-3xl mt-6">
         <h2>{post.title}</h2>
       </div>
-      <div className={styles.postAuthor}>
+      <div className="mt-4 italic text-gray-500 text-sm md:text-base">
         <p>Posted By: {post.author}</p>
       </div>
-      <div className={styles.icons}>
+      <div className="flex justify-end mt-[-2rem]">
+        {/* Edit Icon */}
         <svg
           onClick={handleEdit.bind(null, post.id)}
           xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +187,7 @@ function PostPage() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={styles.editIcon}
+          className="w-6 h-6 cursor-pointer text-blue-700 hover:text-blue-400"
         >
           <path
             strokeLinecap="round"
@@ -195,6 +195,7 @@ function PostPage() {
             d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
           />
         </svg>
+        {/* Delete Icon */}
         <svg
           onClick={handleDelete.bind(null, post.id)}
           xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +203,7 @@ function PostPage() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={styles.deleteIcon}
+          className="w-6 h-6 cursor-pointer text-red-500 hover:text-red-300"
         >
           <path
             strokeLinecap="round"
@@ -211,25 +212,28 @@ function PostPage() {
           />
         </svg>
       </div>
+
+      {/* Post Content */}
       <div
-        className={styles.postContent}
+        className="post-content bg-white mt-4 p-4 rounded-lg leading-6 word-break text-neutral2 text-sm md:text-base"
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(post.content),
         }}
       />
 
+      {/* Tags */}
       {tags.length > 0 && (
-        <div className={styles.tagsContainer}>
-          <p>Tags</p>
+        <div className="flex items-center flex-wrap gap-2 mt-4 border-t border-gray-300 pt-2">
           {tags.map((tag) => (
-            <div className={styles.tag} key={tag}>
+            <div className="bg-lavender py-2 px-4 rounded-lg text-sm" key={tag}>
               {tag}
             </div>
           ))}
         </div>
       )}
-
-      <div className={styles.commentOrRate}>
+        
+      {/* Comment and Rating Section */}
+      <div className="bg-white flex flex-col md:flex-row items-center gap-4 p-0 sm:p-4 mt-4 rounded-lg">
         <CommentEditor
           userInfo={userInfo}
           id={id}
@@ -237,6 +241,7 @@ function PostPage() {
         />
         <RatingComponent userInfo={userInfo} id={id} />
       </div>
+      
       <CommentsDisplay
         comments={comments}
         deleteComment={deleteComment}
