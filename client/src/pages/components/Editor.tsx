@@ -1,7 +1,6 @@
 import 'react-quill/dist/quill.snow.css';
 import React, { FC } from "react";
 import ReactQuill from "react-quill";
-import styles from '../../assets/styles/create-edit-post.module.css'
 
 interface EditorProps {
   value: string;
@@ -24,13 +23,13 @@ const Editor: FC<EditorProps> = ({ value, onChange }) => {
     ],
   };
   return (
-    <div className={styles.content}>
+    <div>
       <ReactQuill
         value={value}
         theme={'snow'}
         onChange={onChange}
         modules={modules} 
-        className={styles.quill}
+        className="bg-white h-60 max-h-60 w-full"
       />
     </div>
   );

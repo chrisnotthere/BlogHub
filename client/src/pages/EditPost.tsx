@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import Editor from "./components/Editor";
-import styles from "../assets/styles/create-edit-post.module.css";
 import { UserContext } from "../context/UserContext";
 import ReactSelect from "react-select";
 import { TAGS } from "../types/Post";
@@ -18,7 +17,6 @@ function EditPost() {
   const [redirect, setRedirect] = useState(false);
   const [imageError, setImageError] = useState("");
   const [contentError, setContentError] = useState("");
-  const [postError, setPostError] = useState("");
 
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
@@ -117,25 +115,26 @@ function EditPost() {
   }
 
   return (
-    <div className={styles.createPost}>
-      <div className={styles.formContainer}>
-        <form className={styles.postForm} onSubmit={updatePost}>
-          <label htmlFor="title">Title</label>
+    <div className="mx-auto w-full max-w-md md:max-w-xl lg:max-w-4xl my-12 sm:my-16 md:my-20 lg:my-28 p-1 sm:p-3 md:p-8 rounded-lg bg-soft-mint shadow-2xl">
+      <div className="bg-white p-8 rounded shadow-md">
+        <form className="flex flex-col items-start" onSubmit={updatePost}>
+          <label htmlFor="title" className="text-bright-teal text-lg font-semibold">Title</label>
           <input
             type="title"
-            placeholder={"Title"}
+            placeholder="Title"
             id="title"
-            className={styles.titleInput}
+            className="mt-2 mb-2 w-full p-1 rounded border-2 border-neutral-400"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-
-          <label htmlFor="image">Cover Image</label>
-          <div className={styles.imageSelect}>
-            <div className="custom-file-upload">
+  
+          <label htmlFor="image" className="text-bright-teal text-lg font-semibold">Cover Image</label>
+          <div className="flex flex-col gap-2 mt-2">
+            <div className="flex flex-col">
               <button
                 type="button"
+                className="w-40 h-8 bg-white text-bright-teal rounded border-2 border-bright-teal font-semibold hover:bg-bright-teal hover:text-white transition-colors duration-300 ease-in-out"
                 onClick={() => {
                   if (fileInputRef.current !== null) {
                     fileInputRef.current.click();
@@ -144,11 +143,11 @@ function EditPost() {
               >
                 Upload File
               </button>
-              <span>{labelText}</span>
+              <span className="mt-2">{labelText}</span>
               <input
                 ref={fileInputRef}
                 type="file"
-                style={{ display: "none" }}
+                className="hidden"
                 onChange={(ev) => {
                   setImage(ev.target.files);
                   setUseDefaultImage(false);
@@ -158,22 +157,22 @@ function EditPost() {
                 id="image"
               />
             </div>
-
-            <div className={styles.defaultContainer}>
-              <button type="button" onClick={handleUseDefaultImage}>
+  
+            <div className="flex items-center gap-1">
+              <button type="button" className="w-40 h-8 bg-white text-bright-teal rounded border-2 border-bright-teal font-semibold hover:bg-bright-teal hover:text-white transition-colors duration-300 ease-in-out" onClick={handleUseDefaultImage}>
                 Use Default Image
               </button>
-
-              <p>{useDefaultImage ? "Default image selected" : ""}</p>
+  
+              <p className="ml-2">{useDefaultImage ? "Default image selected" : ""}</p>
             </div>
-
+  
             {imageError && (
-              <p className={styles.imageErrorMessage}>{imageError}</p>
+              <p className="text-red-500 text-sm mt-4">{imageError}</p>
             )}
           </div>
-
-          <div className={styles.tagsContainer}>
-            <label htmlFor="tags">Tags</label>
+  
+          <div className="flex gap-2 items-center mt-4">
+            <label htmlFor="tags" className="text-bright-teal text-lg font-semibold">Tags</label>
             <ReactSelect
               id="tags"
               name="tags"
@@ -189,16 +188,16 @@ function EditPost() {
               value={tags.map((tag) => ({ label: tag, value: tag }))}
             />
           </div>
-
-          <div className={styles.quillContainer}>
+  
+          <div className="w-full mt-4 mb-20">
             <Editor value={content} onChange={setContent} />
           </div>
-
+  
           {contentError && (
-            <p className={styles.contentErrorMessage}>{contentError}</p>
+            <p className="text-red-500 text-sm mb-3">{contentError}</p>
           )}
-
-          <button>Update post</button>
+  
+          <button className="w-32 h-8 bg-white text-bright-teal rounded border-2 border-bright-teal font-semibold hover:bg-bright-teal hover:text-white transition-colors duration-300 ease-in-out">Update post</button>
         </form>
       </div>
     </div>
